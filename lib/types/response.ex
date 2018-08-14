@@ -5,5 +5,5 @@ defmodule Sendle.HTTP.Response do
 
   @type t :: %__MODULE__{}
 
-  defstruct body: nil, status_code: nil, meta: nil, response_headers: nil
+  defstruct body: nil, status: nil, meta: nil, response_headers: nil
 end

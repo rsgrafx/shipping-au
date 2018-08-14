@@ -9,6 +9,17 @@ defmodule Sendle.HTTP.Client do
     request(:get, endpoint, headers, auth)
   end
 
+  def post(endpoint, params, headers, auth) do
+    request(:post, endpoint, params, headers, auth)
+  end
+
+  def request(:post, endpoint, params, headers, auth) do
+    endpoint
+    |> full_url()
+    |> HTTPoison.post(params, headers, hackney: auth)
+    |> convert()
+  end
+
   def request(:get, endpoint, headers, auth) do
     endpoint
     |> full_url()
@@ -27,7 +38,8 @@ defmodule Sendle.HTTP.Client do
     struct(Response,
       body: body,
       status_code: response.status_code,
-      response_headers: response.headers
+      response_headers: response.headers,
+      status: response.status_code
     )
   end
 
@@ -39,6 +51,30 @@ defmodule Sendle.HTTP.Client do
       "error_description" => description
     } = body
 
-    struct(RequestError, code: code, message: description)
+    error(code, description, response.status_code)
+  end
+
+  defp convert({:ok, %{status_code: 422} = response}) do
+    body = Poison.decode!(response.body)
+
+    %{
+      "error" => code,
+      "error_description" => description
+    } = body
+
+    error(code, description, response.status_code, body)
+  end
+
+  defp convert(result) do
+    struct(RequestError, code: "api_error", message: "Experienced api error making request")
+  end
+
+  defp error(code, description, status_code, body \\ %{}) do
+    struct(RequestError,
+      code: code,
+      message: description,
+      body: body,
+      status: status_code
+    )
   end
 end

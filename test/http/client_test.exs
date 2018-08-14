@@ -10,7 +10,7 @@ defmodule Sendle.HTTP.ClientTest do
       # use_cassette "ping" do
       request = Sendle.Requests.Ping.request()
 
-      assert %Response{status_code: 200} = request
+      assert %Response{status: 200} = request
       # end
     end
   end
@@ -27,17 +27,19 @@ defmodule Sendle.HTTP.ClientTest do
            headers: [{"content-type", "application/json"}, {"accept", "application/json"}],
            auth: [basic_auth: {@creds.sendle_auth_id, @creds.sendle_api_key}]
          }
-    test "GET delegates to HTTPoison get", %{params: params, bypass: bypass} = context do
+    test "GET delegates to HTTPoison get", %{params: params, bypass: bypass} do
       Bypass.expect(bypass, "GET", params.endpoint, fn conn ->
         Plug.Conn.resp(conn, 200, ~s<{"ping":"pong","timestamp":"2018-04-05T15:52:48+10:00"}>)
       end)
 
-      assert %Response{status_code: 200} =
+      assert %Response{status: 200, body: body} =
                Client.get(
                  params.endpoint,
                  params.headers,
                  params.auth
                )
+
+      assert is_map(body)
     end
 
     @tag params: %{
@@ -61,8 +63,6 @@ defmodule Sendle.HTTP.ClientTest do
           params.headers ++ [{"indempotency-key", uuid}],
           params.auth
         )
-
-      Process.sleep(500)
 
       assert %{body: ^first_body} =
                Client.get(

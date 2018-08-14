@@ -8,8 +8,7 @@ defmodule Sendle.Requests do
   @type params :: map() | Keyword.t()
 
   @callback request() :: Response.t()
-  @callback request(endpoint) :: Response.t()
-  @callback request(endpoint, params) :: Response.t()
+  @callback request(params) :: Response.t()
 
-  @optional_callbacks request: 0, request: 1, request: 2
+  @optional_callbacks request: 0, request: 1
 end

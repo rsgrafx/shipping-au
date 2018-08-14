@@ -1,6 +1,7 @@
 defmodule Sendle.Requests.Ping do
   @moduledoc """
     Handles calls to the "/api/ping" endpoint
+    This endpoint only accepts GET requests
   """
   alias Sendle.HTTP.Client
   alias Sendle.HTTP.Response
