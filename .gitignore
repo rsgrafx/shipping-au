@@ -21,7 +21,14 @@ erl_crash.dump
 
 # Ignore package tarball (built via "mix hex.build").
 sendle-*.tar
+<<<<<<< HEAD
 
 .elixir_ls
 .vscode
 .env
+=======
+.vscode
+.elixir_ls
+.vscode
+.env
+>>>>>>> master
