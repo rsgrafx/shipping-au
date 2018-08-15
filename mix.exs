@@ -6,10 +6,15 @@ defmodule Sendle.MixProject do
       app: :sendle,
       version: "0.1.0",
       elixir: "~> 1.7",
+      elixirc_paths: elixirc_paths(Mix.env()),
       start_permanent: Mix.env() == :prod,
       deps: deps()
     ]
   end
+
+  defp elixirc_paths(:test), do: ["lib", "test/support"]
+  defp elixirc_paths(:dev), do: ["lib", "test/support"]
+  defp elixirc_paths(_), do: ["lib"]
 
   # Run "mix help compile.app" to learn about applications.
   def application do
@@ -22,8 +27,15 @@ defmodule Sendle.MixProject do
   # Run "mix help deps" to learn about dependencies.
   defp deps do
     [
-      # {:dep_from_hexpm, "~> 0.3.0"},
-      # {:dep_from_git, git: "https://github.com/elixir-lang/my_dep.git", tag: "0.1.0"},
+      {:httpoison, "~> 1.2.0"},
+      {:poison, "~> 4.0"},
+      {:elixir_uuid, "~> 1.2"},
+      {:ex_machina, "~> 2.2", only: [:dev, :test]},
+      {:exvcr, "~> 0.10", only: :test},
+      {:dialyxir, "~> 0.5", only: :dev},
+      {:mox, "~> 0.4.0", only: [:test]},
+      {:bypass, "~> 0.8", only: [:test]},
+      {:mix_test_watch, "~> 0.8.0", only: :dev, runtime: false}
     ]
   end
 end

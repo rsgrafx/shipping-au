@@ -1,18 +1,9 @@
 defmodule Sendle do
   @moduledoc """
-  Documentation for Sendle.
+  House functions that pull in configuration
   """
 
-  @doc """
-  Hello world.
-
-  ## Examples
-
-      iex> Sendle.hello()
-      :world
-
-  """
-  def hello do
-    :world
+  def get_api_credentials do
+    Application.get_env(:sendle, :api_credentials)
   end
 end

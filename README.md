@@ -1,6 +1,6 @@
-# Sendle
+# Vamp Sendle Integration
 
-**TODO: Add description**
+**TODO: Complete this Documentation **
 
 ## Installation
 
@@ -15,7 +15,8 @@ def deps do
 end
 ```
 
-Documentation can be generated with [ExDoc](https://github.com/elixir-lang/ex_doc)
-and published on [HexDocs](https://hexdocs.pm). Once published, the docs can
-be found at [https://hexdocs.pm/sendle](https://hexdocs.pm/sendle).
+## WIP
+
+This this library will either be integrated as a standalone lib in a (umbrella application) or may be run as a service.  TBD.
+
 

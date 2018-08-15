@@ -1,0 +1,14 @@
+sequenceDiagram
+
+participant client as Vamp Dashboard
+participant sendlesvc as Vamp Sendle Service
+participant warehouseAPI as Inventory Service ?
+# participant sendleapi as Sendle API
+
+client-->>sendlesvc: Product shipment request.
+note over client: What does this<br/> request look like?
+sendlesvc->>+warehouseAPI: Item locations request.
+note over sendlesvc, warehouseAPI: (1.) is request for product locations <br/> to build picking list <br/> Is this a database request<br/> or an API call?
+warehouseAPI->>-sendlesvc: .
+note over sendlesvc, warehouseAPI: Gathers product data points <br/> to generate Picking List.
+sendlesvc-->>client: Sends response Picking Slip successfully generated.
