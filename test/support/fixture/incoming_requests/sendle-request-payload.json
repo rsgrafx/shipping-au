@@ -1,0 +1,103 @@
+{
+	"data": {
+		"campaign_id": 100,
+		"campain_name": "Lulumon Leggings Campaign Fall 2018",
+		"notes" : "Missing some small tags",
+		"participants": [{
+				"influencer_id": 1001,
+				"address": {
+					"full_name": "Ms. Jane Doe",
+					"address_line_1": "Level 1",
+					"address_line_2": "17 Jones St",
+					"city": "North Sydney",
+					"state": "NSW",
+					"country": "Australia",
+					"postcode": "2060"
+				},
+				"products": [{
+						"campaign_product_id": 101,
+						"quantity": 2,
+						"size": "12"
+					},
+					{
+						"campaign_product_id": 102,
+						"quantity": 1,
+						"size": "3"
+					}
+				]
+			},
+			{
+				"influencer_id": 1021,
+				"address": {
+					"full_name": "Ms. Satya Ramaputti",
+					"address_line_1": "602 N May Mesa",
+					"address_line_2": "Apt 82",
+					"city": "Mesa",
+					"state": "Arizona",
+					"country": "USA",
+					"postcode": "85201"
+				},
+				"products": [{
+					"campaign_product_id": 101,
+					"quantity": 2,
+					"size": "12"
+				}]
+			},
+			{
+				"influencer_id": 3024,
+				"address": {
+					"full_name": "Losena Faluvau",
+					"address_line_1": "Northern Press rd",
+					"address_line_2": "Lot 11.",
+					"city": "Nadi Town",
+					"state": "",
+					"country": "Fiji Islands",
+					"postcode": ""
+				},
+				"products": [{
+					"campaign_product_id": 101,
+					"quantity": 2,
+					"size": "4"
+				}]
+			},
+			{
+				"influencer_id": 3024,
+				"address": {
+					"full_name": "Mark Jamal",
+					"address_line_1": "10 Eunos Road 8",
+					"address_line_2": "",
+					"city": "Singapore",
+					"state": "",
+					"country": "Republic of Singapore",
+					"postcode": "408600"
+				},
+				"products": [{
+					"campaign_product_id": 101,
+					"quantity": 2,
+					"size": "XL"
+				}]
+			}
+		],
+		"products": [{
+				"campaign_product_id": 100,
+				"name": "Metal Vent Tech Short Sleeve",
+				"colors": ["Pacific Breeze / Black"],
+				"sku": "2034334"
+			},
+			{
+				"campaign_product_id": 101,
+				"name": "Align Pant Full Length 28",
+				"colors": ["Black Satin"],
+				"sku": "3819211"
+			},
+			{
+				"campaign_product_id": 102,
+				"name": "Crafted Movement Bra - Girls",
+				"colors": ["Black Satin"],
+				"sku": "3819008"
+			}
+		],
+		"batch_rollout": "DateTime",
+		"shipment_process": "standard"
+	}
+}
