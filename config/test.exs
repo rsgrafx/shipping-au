@@ -9,3 +9,11 @@ config :sendle,
 
 config :bypass,
   port: 8383
+
+config :logger, level: :debug
+
+config :sendle, Sendle.Repo,
+  adapter: Ecto.Adapters.Postgres,
+  database: "sendle_service_test",
+  username: "postgres",
+  hostname: "localhost"

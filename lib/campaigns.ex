@@ -1,4 +1,4 @@
-defmodule Sendle.Campaigns.Rollout do
+defmodule Sendle.Campaigns do
   @moduledoc """
   Houses logic to start campaigns, processing incoming requests to
     build picking_lists and packing slips
@@ -9,7 +9,7 @@ defmodule Sendle.Campaigns.Rollout do
   @type campaign :: Campaign.t()
 
   @doc """
-    Entrypoint for system.
+    Entry Point for system.
   """
   def create(payload) when is_binary(payload) do
     with {:ok, payload} <- Poison.decode(payload, keys: :atoms) do

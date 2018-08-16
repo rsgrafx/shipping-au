@@ -27,8 +27,10 @@ defmodule Sendle.MixProject do
   # Run "mix help deps" to learn about dependencies.
   defp deps do
     [
+      {:ecto, "~> 2.2"},
+      {:postgrex, "~> 0.13.5"},
+      {:poison, "~> 3.1"},
       {:httpoison, "~> 1.2.0"},
-      {:poison, "~> 4.0"},
       {:elixir_uuid, "~> 1.2"},
       {:ex_machina, "~> 2.2", only: [:dev, :test]},
       {:exvcr, "~> 0.10", only: :test},

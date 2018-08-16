@@ -9,4 +9,6 @@ config :sendle,
     sendle_api_key: System.get_env("TEST_SENDLE_API_KEY")
   }
 
+config :sendle, ecto_repos: [Sendle.Repo]
+
 import_config "#{Mix.env()}.exs"

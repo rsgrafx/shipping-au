@@ -1,7 +1,7 @@
-defmodule Sendle.Campaigns do
+defmodule Sendle.CampaignsTest do
   use ExUnit.Case
 
-  alias Sendle.Campaigns.Rollout
+  alias Sendle.Campaigns
 
   alias Sendle.Campaigns.{
     Address,
@@ -10,12 +10,12 @@ defmodule Sendle.Campaigns do
     Product
   }
 
-  setup_all do
-    payload = File.read!("test/support/fixture/incoming_requests/sendle-request-payload.json")
-    {:ok, payload: payload}
-  end
-
   describe "create/1" do
+    setup do
+      payload = File.read!("test/support/fixture/incoming_requests/sendle-request-payload.json")
+      {:ok, payload: payload}
+    end
+
     test "recieves product and participants payload and returns valid data structures", %{
       payload: payload
     } do
@@ -42,7 +42,7 @@ defmodule Sendle.Campaigns do
                  address: ^sender_address,
                  instructions: ""
                }
-             } = data = Rollout.create(payload)
+             } = Campaigns.create(payload)
 
       assert %Participant{
                email: "",
@@ -63,9 +63,26 @@ defmodule Sendle.Campaigns do
 
       assert %Product{} = List.first(products)
     end
+  end
 
-    test "retrieves product and participants from database referencing campaign_id"
+  describe "retrieve" do
+    setup do
+      payload = File.read!("test/support/fixture/incoming_requests/sendle-request-payload.json")
+      {:ok, payload: payload}
+    end
 
-    test "can retrieve"
+    test "retrieves product and participants from database referencing campaign_id", %{
+      payload: payload
+    } do
+      # Given a request has been submitted.
+      # A Vamp team member should be able to access PickingList.
+
+      campaign =
+        payload
+        |> Campaigns.create()
+        |> Campaigns.save()
+
+      assert %Campaign{campaign_id: 100} = Campaigns.get_campaign(campaign_id: 100)
+    end
   end
 end
