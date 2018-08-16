@@ -82,7 +82,11 @@ defmodule Sendle.CampaignsTest do
         |> Campaigns.create()
         |> Campaigns.save()
 
-      assert %Campaign{campaign_id: 100} = Campaigns.get_campaign(campaign_id: 100)
+      assert %Campaign{campaign_id: 100, participants: influencers} =
+               Campaigns.get_campaign(campaign_id: 100)
+
+      assert is_list(influencers)
+      assert %Participant{} = List.first(influencers)
     end
   end
 end
