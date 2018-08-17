@@ -16,4 +16,5 @@ config :sendle, Sendle.Repo,
   adapter: Ecto.Adapters.Postgres,
   database: "sendle_service_test",
   username: "postgres",
-  hostname: "localhost"
+  hostname: "localhost",
+  pool: Ecto.Adapters.SQL.Sandbox

@@ -11,17 +11,24 @@ defmodule Sendle.Campaigns.Campaign do
 
   @type t :: %__MODULE__{
           campaign_id: integer,
+          campaign_name: binary(),
           instructions: binary(),
           sender: map(),
           participants: [participant],
           products: [product]
         }
 
-  defstruct campaign_id: nil, sender: nil, instructions: nil, participants: [], products: []
+  defstruct campaign_name: nil,
+            campaign_id: nil,
+            sender: nil,
+            instructions: nil,
+            participants: [],
+            products: []
 
   @spec new(map()) :: t
   def new(data) do
     struct(__MODULE__,
+      campaign_name: data.campaign_name,
       campaign_id: data.campaign_id,
       instructions: data.notes,
       sender: warehouse(:au),

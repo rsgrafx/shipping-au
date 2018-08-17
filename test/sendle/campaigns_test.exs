@@ -1,14 +1,5 @@
 defmodule Sendle.CampaignsTest do
-  use ExUnit.Case
-
-  alias Sendle.Campaigns
-
-  alias Sendle.Campaigns.{
-    Address,
-    Campaign,
-    Participant,
-    Product
-  }
+  use Sendle.DataCase
 
   describe "create/1" do
     setup do
@@ -65,7 +56,7 @@ defmodule Sendle.CampaignsTest do
     end
   end
 
-  describe "retrieve" do
+  describe "save/1" do
     setup do
       payload = File.read!("test/support/fixture/incoming_requests/sendle-request-payload.json")
       {:ok, payload: payload}
@@ -82,9 +73,19 @@ defmodule Sendle.CampaignsTest do
         |> Campaigns.create()
         |> Campaigns.save()
 
+      alias Sendle.Schemas.{CampaignRollout, CampaignParticipant}
+      assert [campaign] = Repo.all(CampaignRollout) |> Repo.preload(:campaign_participants)
+
+      assert campaign.name == "Lulumon Leggings Campaign Fall 2018"
+      # todo:
+      assert campaign.campaign_id == 100
+      assert campaign.instructions == "Missing some small tags"
+
+      # 
       assert %Campaign{campaign_id: 100, participants: influencers} =
                Campaigns.get_campaign(campaign_id: 100)
 
+      #
       assert is_list(influencers)
       assert %Participant{} = List.first(influencers)
     end
