@@ -62,7 +62,7 @@ defmodule Sendle.CampaignsTest do
       {:ok, payload: payload}
     end
 
-    test "retrieves product and participants from database referencing campaign_id", %{
+    test "retrieves participants from database referencing campaign_id", %{
       payload: payload
     } do
       # Given a request has been submitted.
@@ -74,14 +74,18 @@ defmodule Sendle.CampaignsTest do
         |> Campaigns.save()
 
       alias Sendle.Schemas.{CampaignRollout, CampaignParticipant}
-      assert [campaign] = Repo.all(CampaignRollout) |> Repo.preload(:campaign_participants)
+
+      assert [campaign] =
+               CampaignRollout
+               |> Repo.all()
+               |> Repo.preload(:campaign_participants)
 
       assert campaign.name == "Lulumon Leggings Campaign Fall 2018"
       # todo:
       assert campaign.campaign_id == 100
       assert campaign.instructions == "Missing some small tags"
 
-      # 
+      #
       assert %Campaign{campaign_id: 100, participants: influencers} =
                Campaigns.get_campaign(campaign_id: 100)
 
@@ -90,4 +94,6 @@ defmodule Sendle.CampaignsTest do
       assert %Participant{} = List.first(influencers)
     end
   end
+
+  test "retrieves products from database referencing campaign_id"
 end

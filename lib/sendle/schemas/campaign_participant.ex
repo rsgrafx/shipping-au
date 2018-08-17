@@ -23,36 +23,18 @@ defmodule Sendle.Schemas.CampaignParticipant do
     field(:shipping_instructions, :string)
   end
 
-  @allowed [
-    :campaign_id,
-    :influencer_id,
-    :full_name,
-    :email,
-    :address_line1,
-    :address_line2,
-    :city,
-    :state_name,
-    :country,
-    :postcode,
-    :note,
-    :size,
-    :weight,
-    :quantity,
-    :shipping_instructions
-  ]
-
   @spec changeset(
           struct :: t(),
           map()
         ) :: Ecto.Changeset.t()
   def changeset(struct, params \\ %{}) do
     struct
-    |> cast(params, @allowed)
+    |> cast(params, allowed())
     |> validate_required(required())
   end
 
   defp required() do
-    @allowed --
+    allowed() --
       [
         :address_line2,
         :state_name,
@@ -79,5 +61,9 @@ defmodule Sendle.Schemas.CampaignParticipant do
       full_name: params.full_name,
       shipping_instructions: params.note_for_shipper
     }
+  end
+
+  defp allowed do
+    __MODULE__.__schema__(:fields) -- [:id]
   end
 end
