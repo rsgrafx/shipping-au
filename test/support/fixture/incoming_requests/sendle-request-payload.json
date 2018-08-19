@@ -94,7 +94,7 @@
 				"sku": "3819008"
 			}
 		],
-		"batch_rollout": "DateTime",
-		"shipment_process": "standard"
+		"inserted_at": "<UTC timestamp>",
+		"shipment_process": "standard,international"
 	}
 }
