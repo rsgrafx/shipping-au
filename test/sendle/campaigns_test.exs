@@ -1,6 +1,8 @@
 defmodule Sendle.CampaignsTest do
   use Sendle.DataCase
 
+  alias Sendle.SchemaFactory, as: SF
+
   describe "create/1" do
     setup do
       payload = File.read!("test/support/fixture/incoming_requests/sendle-request-payload.json")
@@ -78,22 +80,29 @@ defmodule Sendle.CampaignsTest do
       assert [campaign] =
                CampaignRollout
                |> Repo.all()
-               |> Repo.preload(:campaign_participants)
+               |> Repo.preload(:participants)
 
       assert campaign.name == "Lulumon Leggings Campaign Fall 2018"
       # todo:
       assert campaign.campaign_id == 100
       assert campaign.instructions == "Missing some small tags"
+    end
 
-      #
-      assert %Campaign{campaign_id: 100, participants: influencers} =
-               Campaigns.get_campaign(campaign_id: 100)
+    test "retrieves products from database referencing campaign_id", %{payload: payload} do
+      campaign_rollout = SF.insert(:campaign_rollout)
+
+      campaign_id = campaign_rollout.campaign_id
+
+      alias Sendle.Schemas.{CampaignRollout, CampaignParticipant}
+
+      assert %Campaign{campaign_id: ^campaign_id, participants: influencers, products: products} =
+               Campaigns.get_campaign(campaign_id: campaign_rollout.campaign_id)
 
       #
       assert is_list(influencers)
       assert %Participant{} = List.first(influencers)
+      assert is_list(products)
+      assert %Product{} = List.first(products)
     end
   end
-
-  test "retrieves products from database referencing campaign_id"
 end

@@ -81,19 +81,16 @@
 		"products": [{
 				"campaign_product_id": 100,
 				"name": "Metal Vent Tech Short Sleeve",
-				"colors": ["Pacific Breeze / Black"],
 				"sku": "2034334"
 			},
 			{
 				"campaign_product_id": 101,
 				"name": "Align Pant Full Length 28",
-				"colors": ["Black Satin"],
 				"sku": "3819211"
 			},
 			{
 				"campaign_product_id": 102,
 				"name": "Crafted Movement Bra - Girls",
-				"colors": ["Black Satin"],
 				"sku": "3819008"
 			}
 		],

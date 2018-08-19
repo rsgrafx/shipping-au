@@ -5,6 +5,7 @@ defmodule Sendle.Campaigns.Campaign do
   """
 
   alias Sendle.Campaigns.{Participant, Product}
+  alias Sendle.Schemas.CampaignRollout
 
   @type participant :: Participant.t()
   @type product :: Product.t()
@@ -25,7 +26,18 @@ defmodule Sendle.Campaigns.Campaign do
             participants: [],
             products: []
 
-  @spec new(map()) :: t
+  @spec new(data :: map() | CampaignRollout.t()) :: t
+  def new(%CampaignRollout{} = data) do
+    struct(__MODULE__,
+      campaign_name: data.name,
+      campaign_id: data.campaign_id,
+      instructions: data.instructions,
+      sender: warehouse(:au),
+      participants: build_participants(data.participants),
+      products: build_products(data.products)
+    )
+  end
+
   def new(data) do
     struct(__MODULE__,
       campaign_name: data.campaign_name,

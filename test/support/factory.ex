@@ -1,4 +1,4 @@
-defmodule Sendle.JSON.Factory do
+defmodule Sendle.JSONFactory do
   use ExMachina
 
   alias Sendle.Campaigns.{

@@ -6,6 +6,7 @@ defmodule Sendle.Campaigns do
 
   alias Sendle.Campaigns.Campaign
   alias Sendle.Schemas.{CampaignRollout, CampaignParticipant}
+  alias Sendle.Repo
 
   @type campaign :: Campaign.t()
 
@@ -51,5 +52,33 @@ defmodule Sendle.Campaigns do
     params
     |> CampaignParticipant.build()
     |> CampaignParticipant.changeset()
+  end
+
+  @doc """
+    Fetch Campaign.  From database
+  """
+  @spec get_campaign(params :: integer | Keyword.t()) :: CampainRollout.t()
+  def get_campaign(params) do
+    result = do_get_campaign(params)
+
+    case result do
+      nil ->
+        :error_not_found
+
+      campaign_rollout ->
+        Campaign.new(campaign_rollout)
+    end
+  end
+
+  def do_get_campaign(id) when is_integer(id) do
+    CampaignRollout
+    |> Repo.get(id)
+    |> Repo.preload([:participants, :products])
+  end
+
+  def do_get_campaign(campaign_id: id) do
+    CampaignRollout
+    |> Repo.get_by(campaign_id: id)
+    |> Repo.preload([:participants, :products])
   end
 end

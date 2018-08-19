@@ -19,6 +19,18 @@ defmodule Sendle.Campaigns.Address do
             address_line1: nil,
             address_line2: nil
 
+  # building from db record. # Which matches sendles address naming conventions
+  def build(%{address_line1: _, address_line2: _, state_name: _} = address) do
+    struct(__MODULE__,
+      address_line1: address.address_line1,
+      address_line2: address.address_line2,
+      city: address.city,
+      state_name: address.state_name,
+      country: address.country,
+      postcode: address.postcode
+    )
+  end
+
   def build(address) do
     struct(__MODULE__,
       address_line1: address.address_line_1,

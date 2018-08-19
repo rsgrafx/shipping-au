@@ -5,7 +5,8 @@ defmodule Sendle.Schemas.CampaignRollout do
   @type t :: %__MODULE__{}
 
   schema "campaign_rollouts" do
-    has_many(:campaign_participants, Sendle.Schemas.CampaignParticipant)
+    has_many(:participants, Sendle.Schemas.CampaignParticipant)
+    has_many(:products, Sendle.Schemas.CampaignProduct)
     field(:name, :string)
     field(:campaign_id, :integer)
     field(:instructions, :string)
