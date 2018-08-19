@@ -1,12 +1,13 @@
 # Sendle API
 
 ### Actors
-* Admin (Someone in charge of putting together influencers and products)
+* Admin Team Member (ATM) (Someone in charge of putting together influencers and products)
 * Packing Team Member (PTM) (?) Someone in charge of managing physically putting together packages.
+* Both ATM and PTM use dashboard UI to make requests to sendle service.
 
 #### (1)
 
- - (Admin) puts together approved Influencers have been selected for a campaign. Request is made to start a campaigns shipping process.
+ - (ATM) puts together approved Influencers have been selected for a campaign. Request is made to start a campaigns shipping process.
 
 #### (2)
 
@@ -148,7 +149,7 @@ Status Code 202
 ```json
 {
   "data" : {
-    status: "accepted"
+    "status": "accepted"
   }
 }
 ```
@@ -163,7 +164,7 @@ campaign_id = Campaign (id) in `Servalan`.
 ```json
 {
 	"data": {
-		"status": "new", // <new, in_progress, complete>
+		"status": "new",
 		"campaign_id": 100,
 		"campaign_name": "Lulumon Leggings Campaign Fall 2018",
 		"notes": "Missing some small tags",
@@ -260,7 +261,7 @@ campaign_id = Campaign (id) in `Servalan`.
 		],
 		"inserted_at": "<utc/datetime>",
 		"shipment_process": "standard",
-		"packing_slips": null  // will be populated when status complete.
+		"packing_slips": null
 	}
 }
 ```
