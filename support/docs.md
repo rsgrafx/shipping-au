@@ -1,5 +1,26 @@
 # Sendle API
 
+### Actors
+* Admin (Someone in charge of putting together influencers and products)
+* Packing Team Member (PTM) (?) Someone in charge of managing physically putting together packages.
+
+#### (1)
+
+ - (Admin) puts together approved Influencers have been selected for a campaign. Request is made to start a campaigns shipping process.
+
+#### (2)
+
+ - (PTM) Can see new campaigns (to be processed)
+
+#### (3)
+ - (PTM) uses dashboard to view picking list.
+
+#### (4)
+ - (PTM) uses dashboard to enter weight, shipping details for one or all packages for a specific campaign.
+ - (PTM) received response with Order and Packing Slip details.
+
+[](https://s3.ap-south-1.amazonaws.com/utolending-media/final.mmd.png)
+
 ### Proposed Endpoints
 - Given a campaign has a final list of `APPROVED` Influencers
 - Sendle Service should receive a payload that contains campaign
@@ -132,11 +153,11 @@ Status Code 202
 }
 ```
 
-### GET /sendle/campaigns/:campaign_id/picking_list
+### GET /sendle/campaigns/:campaign_id
 * Fetch Picking list for an campaign which order has been started.  Data is surfaced in order to be used in a UI that can present a human readable Picking list.
 
 ##### Query Params
-campaign_id = Campaign (id) in Core.
+campaign_id = Campaign (id) in `Servalan`.
 
 ### Example Response (status = new || in_progress )
 ```json
