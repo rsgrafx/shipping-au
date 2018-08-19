@@ -19,7 +19,7 @@
  - (PTM) uses dashboard to enter weight, shipping details for one or all packages for a specific campaign.
  - (PTM) received response with Order and Packing Slip details.
 
-[](https://s3.ap-south-1.amazonaws.com/utolending-media/final.mmd.png)
+![simplified flow](https://s3.ap-south-1.amazonaws.com/utolending-media/final.mmd.png)
 
 ### Proposed Endpoints
 - Given a campaign has a final list of `APPROVED` Influencers
