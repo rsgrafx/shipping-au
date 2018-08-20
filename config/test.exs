@@ -7,6 +7,8 @@ config :sendle,
     sendle_api_key: System.get_env("TEST_SENDLE_API_KEY")
   }
 
+config :sendle, http_port: 8011
+
 config :bypass,
   port: 8383
 

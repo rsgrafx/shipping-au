@@ -5,3 +5,5 @@ config :sendle, Sendle.Repo,
   database: "sendle_service_dev",
   username: "postgres",
   hostname: "localhost"
+
+config :sendle, http_port: 8000

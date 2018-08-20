@@ -32,6 +32,8 @@ defmodule Sendle.MixProject do
       {:poison, "~> 3.1"},
       {:httpoison, "~> 1.2.0"},
       {:elixir_uuid, "~> 1.2"},
+      {:cowboy, "~> 1.0"},
+      {:plug, "~> 1.5.0"},
       {:ex_machina, "~> 2.2", only: [:dev, :test]},
       {:exvcr, "~> 0.10", only: :test},
       {:dialyxir, "~> 0.5", only: :dev},
