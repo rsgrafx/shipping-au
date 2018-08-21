@@ -14,16 +14,20 @@ defmodule Sendle.Campaigns.Participant do
           note_for_shipper: binary(),
           shipping_size: float(),
           shipping_weight: float(),
-          quantity: integer()
+          quantity: integer(),
+          influencer_id: integer(),
+          products: list()
         }
 
   defstruct full_name: nil,
+            influencer_id: nil,
             email: nil,
             address: nil,
             note_for_shipper: nil,
             shipping_size: nil,
             shipping_weight: nil,
-            quantity: nil
+            quantity: nil,
+            products: []
 
   @spec build(data :: CampaignParticipant.t() | map()) :: t()
   @doc "Loading from from the database."
@@ -33,6 +37,7 @@ defmodule Sendle.Campaigns.Participant do
 
     struct(__MODULE__,
       address: build_address(values),
+      influencer_id: data.influencer_id,
       full_name: data.full_name,
       email: data.email,
       note_for_shipper: data.note,

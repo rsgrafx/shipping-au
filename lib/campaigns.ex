@@ -13,17 +13,27 @@ defmodule Sendle.Campaigns do
   @doc """
     Entry Point for system.
   """
-  def create(payload) when is_binary(payload) do
-    with {:ok, payload} <- Poison.decode(payload, keys: :atoms) do
+  @spec create(payload :: map()) :: campaign
+  def create(%{"data" => _data} = data) do
+    with {:ok, payload} <- atomize(data) do
       create(payload)
     else
-      _ -> {:error, :cannot_decode_payload, payload}
+      _ -> {:error, :cannot_decode_payload}
     end
   end
 
-  @spec create(payload :: map()) :: campaign
   def create(%{data: data} = payload) when is_map(payload) do
     Campaign.new(data)
+  end
+
+  defp atomize(%{"data" => _} = data) do
+    data
+    |> Poison.encode!()
+    |> Poison.decode(keys: :atoms)
+  end
+
+  defp atomize(%{data: _} = data) do
+    data
   end
 
   @doc """
@@ -76,7 +86,7 @@ defmodule Sendle.Campaigns do
     |> Repo.preload([:participants, :products])
   end
 
-  def do_get_campaign(campaign_id: id) do
+  def do_get_campaign(campaign_id: id) when is_integer(id) do
     CampaignRollout
     |> Repo.get_by(campaign_id: id)
     |> Repo.preload([:participants, :products])

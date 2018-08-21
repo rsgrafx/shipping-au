@@ -3,11 +3,11 @@ defmodule SendleWeb.PingTest do
 
   describe "/ping" do
     test "returns success" do
-
-      response = build_conn()
-      |> put_req_header("content-type", "application/json")
-      |> put_req_header("accept", "application/json")
-      |> get("/ping")
+      response =
+        build_conn()
+        |> put_req_header("content-type", "application/json")
+        |> put_req_header("accept", "application/json")
+        |> get("/ping")
 
       assert json_response(response, 200)
     end

@@ -102,7 +102,7 @@ defmodule Sendle.ConnTest do
   @doc """
   Creates a connection to be used in upcoming requests.
   """
-  @spec build_conn() :: Conn.t
+  @spec build_conn() :: Conn.t()
   def build_conn() do
     build_conn(:get, "/", nil)
   end
@@ -110,12 +110,13 @@ defmodule Sendle.ConnTest do
   @doc """
   Deprecated version of conn/0. Use build_conn/0 instead
   """
-  @spec conn() :: Conn.t
+  @spec conn() :: Conn.t()
   def conn() do
-    IO.write :stderr, """
+    IO.write(:stderr, """
     warning: using conn/0 to build a connection is deprecated. Use build_conn/0 instead.
-    #{Exception.format_stacktrace}
-    """
+    #{Exception.format_stacktrace()}
+    """)
+
     build_conn()
   end
 
@@ -126,7 +127,7 @@ defmodule Sendle.ConnTest do
   This is useful when a specific connection is required
   for testing a plug or a particular function.
   """
-  @spec build_conn(atom | binary, binary, binary | list | map | nil) :: Conn.t
+  @spec build_conn(atom | binary, binary, binary | list | map | nil) :: Conn.t()
   def build_conn(method, path, params_or_body \\ nil) do
     Plug.Adapters.Test.Conn.conn(%Conn{}, method, path, params_or_body)
     |> Conn.put_private(:plug_skip_csrf_protection, true)
@@ -136,12 +137,13 @@ defmodule Sendle.ConnTest do
   @doc """
   Deprecated version of conn/3. Use build_conn/3 instead
   """
-  @spec conn(atom | binary, binary, binary | list | map | nil) :: Conn.t
+  @spec conn(atom | binary, binary, binary | list | map | nil) :: Conn.t()
   def conn(method, path, params_or_body \\ nil) do
-    IO.write :stderr, """
+    IO.write(:stderr, """
     warning: using conn/3 to build a connection is deprecated. Use build_conn/3 instead.
-    #{Exception.format_stacktrace}
-    """
+    #{Exception.format_stacktrace()}
+    """)
+
     build_conn(method, path, params_or_body)
   end
 
@@ -155,9 +157,15 @@ defmodule Sendle.ConnTest do
     """
     defmacro unquote(method)(conn, path_or_action, params_or_body \\ nil) do
       method = unquote(method)
+
       quote do
-        Sendle.ConnTest.dispatch(unquote(conn), @endpoint, unquote(method),
-                                  unquote(path_or_action), unquote(params_or_body))
+        Sendle.ConnTest.dispatch(
+          unquote(conn),
+          @endpoint,
+          unquote(method),
+          unquote(path_or_action),
+          unquote(params_or_body)
+        )
       end
     end
   end
@@ -201,14 +209,16 @@ defmodule Sendle.ConnTest do
       without normalizing its entries
   """
   def dispatch(conn, endpoint, method, path_or_action, params_or_body \\ nil)
+
   def dispatch(%Plug.Conn{} = conn, endpoint, method, path_or_action, params_or_body) do
     if is_nil(endpoint) do
       raise "no @endpoint set in test case"
     end
 
     if is_binary(params_or_body) and is_nil(List.keyfind(conn.req_headers, "content-type", 0)) do
-      raise ArgumentError, "a content-type header is required when setting " <>
-                           "a binary body in a test connection"
+      raise ArgumentError,
+            "a content-type header is required when setting " <>
+              "a binary body in a test connection"
     end
 
     conn
@@ -217,9 +227,10 @@ defmodule Sendle.ConnTest do
     |> Conn.put_private(:phoenix_recycled, false)
     |> from_set_to_sent()
   end
+
   def dispatch(conn, _endpoint, method, _path_or_action, _params_or_body) do
-    raise ArgumentError, "expected first argument to #{method} to be a " <>
-                         "%Plug.Conn{}, got #{inspect conn}"
+    raise ArgumentError,
+          "expected first argument to #{method} to be a " <> "%Plug.Conn{}, got #{inspect(conn)}"
   end
 
   defp dispatch_endpoint(conn, endpoint, method, path, params_or_body) when is_binary(path) do
@@ -240,13 +251,13 @@ defmodule Sendle.ConnTest do
   @doc """
   Puts a request cookie.
   """
-  @spec put_req_cookie(Conn.t, binary, binary) :: Conn.t
+  @spec put_req_cookie(Conn.t(), binary, binary) :: Conn.t()
   defdelegate put_req_cookie(conn, key, value), to: Plug.Test
 
   @doc """
   Deletes a request cookie.
   """
-  @spec delete_req_cookie(Conn.t, binary) :: Conn.t
+  @spec delete_req_cookie(Conn.t(), binary) :: Conn.t()
   defdelegate delete_req_cookie(conn, key), to: Plug.Test
 
   @doc """
@@ -258,18 +269,20 @@ defmodule Sendle.ConnTest do
       assert response_content_type(conn, :html) =~ "charset=utf-8"
 
   """
-  @spec response_content_type(Conn.t, atom) :: String.t | no_return
+  @spec response_content_type(Conn.t(), atom) :: String.t() | no_return
   def response_content_type(conn, format) when is_atom(format) do
     case Conn.get_resp_header(conn, "content-type") do
       [] ->
         raise "no content-type was set, expected a #{format} response"
+
       [h] ->
         if response_content_type?(h, format) do
           h
         else
-          raise "expected content-type for #{format}, got: #{inspect h}"
+          raise "expected content-type for #{format}, got: #{inspect(h)}"
         end
-      [_|_] ->
+
+      [_ | _] ->
         raise "more than one content-type was set, expected a #{format} response"
     end
   end
@@ -278,9 +291,11 @@ defmodule Sendle.ConnTest do
     case parse_content_type(header) do
       {part, subpart} ->
         format = Atom.to_string(format)
-        format in MIME.extensions(part <> "/" <> subpart) or
-          format == subpart or String.ends_with?(subpart, "+" <> format)
-      _  ->
+
+        format in MIME.extensions(part <> "/" <> subpart) or format == subpart or
+          String.ends_with?(subpart, "+" <> format)
+
+      _ ->
         false
     end
   end
@@ -289,6 +304,7 @@ defmodule Sendle.ConnTest do
     case Plug.Conn.Utils.content_type(header) do
       {:ok, part, subpart, _params} ->
         {part, subpart}
+
       _ ->
         false
     end
@@ -304,7 +320,7 @@ defmodule Sendle.ConnTest do
       assert response(conn, 200) =~ "hello world"
 
   """
-  @spec response(Conn.t, status :: integer | atom) :: binary | no_return
+  @spec response(Conn.t(), status :: integer | atom) :: binary | no_return
   def response(%Conn{state: :unset}, _status) do
     raise """
     expected connection to have a response but no response was set/sent.
@@ -333,10 +349,10 @@ defmodule Sendle.ConnTest do
 
       assert html_response(conn, 200) =~ "<html>"
   """
-  @spec html_response(Conn.t, status :: integer | atom) :: String.t | no_return
+  @spec html_response(Conn.t(), status :: integer | atom) :: String.t() | no_return
   def html_response(conn, status) do
     body = response(conn, status)
-    _    = response_content_type(conn, :html)
+    _ = response_content_type(conn, :html)
     body
   end
 
@@ -348,10 +364,10 @@ defmodule Sendle.ConnTest do
 
       assert text_response(conn, 200) =~ "hello"
   """
-  @spec text_response(Conn.t, status :: integer | atom) :: String.t | no_return
+  @spec text_response(Conn.t(), status :: integer | atom) :: String.t() | no_return
   def text_response(conn, status) do
     body = response(conn, status)
-    _    = response_content_type(conn, :text)
+    _ = response_content_type(conn, :text)
     body
   end
 
@@ -365,15 +381,18 @@ defmodule Sendle.ConnTest do
       assert "can't be blank" in body["errors"]
 
   """
-  @spec json_response(Conn.t, status :: integer | atom) :: map | no_return
+  @spec json_response(Conn.t(), status :: integer | atom) :: map | no_return
   def json_response(conn, status) do
     body = response(conn, status)
-    _    = response_content_type(conn, :json)
+    _ = response_content_type(conn, :json)
+
     case Poison.decode(body) do
       {:ok, body} ->
         body
+
       {:error, {:invalid, token, _}} ->
-        raise "could not decode JSON body, invalid token #{inspect token} in body:\n\n#{body}"
+        raise "could not decode JSON body, invalid token #{inspect(token)} in body:\n\n#{body}"
+
       {:error, :invalid, _} ->
         raise "could not decode JSON body, body is empty"
     end
@@ -391,7 +410,7 @@ defmodule Sendle.ConnTest do
       assert redirected_to(conn, 301) =~ "/foo/bar"
       assert redirected_to(conn, :moved_permanently) =~ "/foo/bar"
   """
-  @spec redirected_to(Conn.t, status :: non_neg_integer) :: Conn.t
+  @spec redirected_to(Conn.t(), status :: non_neg_integer) :: Conn.t()
   def redirected_to(conn, status \\ 302)
 
   def redirected_to(%Conn{state: :unset}, _status) do
@@ -403,7 +422,7 @@ defmodule Sendle.ConnTest do
   end
 
   def redirected_to(%Conn{status: status} = conn, status) do
-    location = Conn.get_resp_header(conn, "location") |> List.first
+    location = Conn.get_resp_header(conn, "location") |> List.first()
     location || raise "no location header was set on redirected_to"
   end
 
@@ -424,7 +443,7 @@ defmodule Sendle.ConnTest do
   to the endpoint, unless the connection has already been
   recycled.
   """
-  @spec recycle(Conn.t) :: Conn.t
+  @spec recycle(Conn.t()) :: Conn.t()
   def recycle(conn) do
     build_conn()
     |> Plug.Test.recycle_cookies(conn)
@@ -441,7 +460,7 @@ defmodule Sendle.ConnTest do
 
   See `recycle/1` for more information.
   """
-  @spec ensure_recycled(Conn.t) :: Conn.t
+  @spec ensure_recycled(Conn.t()) :: Conn.t()
   def ensure_recycled(conn) do
     if conn.private[:phoenix_recycled] do
       conn
@@ -488,7 +507,7 @@ defmodule Sendle.ConnTest do
         |> MyApp.RequireAuthentication.call([])
       assert conn.halted
   """
-  @spec bypass_through(Conn.t) :: Conn.t
+  @spec bypass_through(Conn.t()) :: Conn.t()
   def bypass_through(conn) do
     Plug.Conn.put_private(conn, :phoenix_bypass, :all)
   end
@@ -498,7 +517,7 @@ defmodule Sendle.ConnTest do
 
   See `bypass_through/1`.
   """
-  @spec bypass_through(Conn.t, module, :atom | list) :: Conn.t
+  @spec bypass_through(Conn.t(), module, :atom | list) :: Conn.t()
   def bypass_through(conn, router, pipelines \\ []) do
     Plug.Conn.put_private(conn, :phoenix_bypass, {router, List.wrap(pipelines)})
   end
@@ -532,6 +551,7 @@ defmodule Sendle.ConnTest do
   def assert_error_sent(status_int_or_atom, func) do
     expected_status = Plug.Conn.Status.code(status_int_or_atom)
     discard_previously_sent()
+
     result =
       func
       |> wrap_request()
@@ -543,11 +563,14 @@ defmodule Sendle.ConnTest do
 
   defp receive_response({:ok, conn}, expected_status) do
     if conn.state == :sent do
-      flunk "expected error to be sent as #{expected_status} status, but response sent #{conn.status} without error"
+      flunk(
+        "expected error to be sent as #{expected_status} status, but response sent #{conn.status} without error"
+      )
     else
-      flunk "expected error to be sent as #{expected_status} status, but no error happened"
+      flunk("expected error to be sent as #{expected_status} status, but no error happened")
     end
   end
+
   defp receive_response({:error, {exception, stack}}, expected_status) do
     receive do
       {ref, {^expected_status, headers, body}} when is_reference(ref) ->
@@ -555,24 +578,26 @@ defmodule Sendle.ConnTest do
 
       {ref, {sent_status, _headers, _body}} when is_reference(ref) ->
         reraise ExUnit.AssertionError.exception("""
-        expected error to be sent as #{expected_status} status, but got #{sent_status} from:
+                expected error to be sent as #{expected_status} status, but got #{sent_status} from:
 
-        #{Exception.format_banner(:error, exception)}
-        """), stack
+                #{Exception.format_banner(:error, exception)}
+                """),
+                stack
+    after
+      0 ->
+        reraise ExUnit.AssertionError.exception("""
+                expected error to be sent as #{expected_status} status, but got an error with no response from:
 
-    after 0 ->
-      reraise ExUnit.AssertionError.exception("""
-      expected error to be sent as #{expected_status} status, but got an error with no response from:
-
-      #{Exception.format_banner(:error, exception)}
-      """), stack
+                #{Exception.format_banner(:error, exception)}
+                """),
+                stack
     end
   end
 
   defp discard_previously_sent() do
     receive do
       {ref, {_, _, _}} when is_reference(ref) -> discard_previously_sent()
-      {:plug_conn, :sent}                     -> discard_previously_sent()
+      {:plug_conn, :sent} -> discard_previously_sent()
     after
       0 -> :ok
     end

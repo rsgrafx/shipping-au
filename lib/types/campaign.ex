@@ -15,16 +15,20 @@ defmodule Sendle.Campaigns.Campaign do
           campaign_name: binary(),
           instructions: binary(),
           sender: map(),
+          status: any(),
           participants: [participant],
-          products: [product]
+          products: [product],
+          packing_slips: list()
         }
 
   defstruct campaign_name: nil,
             campaign_id: nil,
             sender: nil,
+            status: nil,
             instructions: nil,
             participants: [],
-            products: []
+            products: [],
+            packing_slips: nil
 
   @spec new(data :: map() | CampaignRollout.t()) :: t
   def new(%CampaignRollout{} = data) do
@@ -32,6 +36,7 @@ defmodule Sendle.Campaigns.Campaign do
       campaign_name: data.name,
       campaign_id: data.campaign_id,
       instructions: data.instructions,
+      status: data.status,
       sender: warehouse(:au),
       participants: build_participants(data.participants),
       products: build_products(data.products)

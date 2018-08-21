@@ -23,7 +23,7 @@ defmodule Sendle.SchemaFactory do
   def campaign_participant_factory do
     %CampaignParticipant{
       campaign_id: 12,
-      influencer_id: 100,
+      influencer_id: 121,
       full_name: "Earvin Magic Johnson",
       email: sequence(:email, &"vamp-user-#{&1}@example.com"),
       address_line1: "12 Foo Bar st",

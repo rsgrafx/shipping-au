@@ -3,9 +3,15 @@ defmodule Sendle.CampaignsTest do
 
   alias Sendle.SchemaFactory, as: SF
 
+  @payload_file "test/support/fixture/incoming_requests/sendle-request-payload.json"
+
   describe "create/1" do
     setup do
-      payload = File.read!("test/support/fixture/incoming_requests/sendle-request-payload.json")
+      payload =
+        @payload_file
+        |> File.read!()
+        |> Poison.decode!(keys: :atoms)
+
       {:ok, payload: payload}
     end
 
@@ -60,7 +66,11 @@ defmodule Sendle.CampaignsTest do
 
   describe "save/1" do
     setup do
-      payload = File.read!("test/support/fixture/incoming_requests/sendle-request-payload.json")
+      payload =
+        @payload_file
+        |> File.read!()
+        |> Poison.decode!()
+
       {:ok, payload: payload}
     end
 

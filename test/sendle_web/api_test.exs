@@ -1,11 +1,80 @@
 defmodule SendleWeb.ApiTest do
-  use ExUnit.Case, async: true
-  use Plug.Test
+  use Sendle.ConnCase
 
   # Creating the Picking List.
-  describe "POST /sendle/campaign/rollout" do
-    test "Endpoint should receive payload and create records"
+
+  setup do
+    payload = File.read!("test/support/fixture/incoming_requests/sendle-request-payload.json")
+    url = Application.get_env(:sendle, :url)
+    {:ok, payload: payload, http_url: url}
+  end
+
+  describe "POST /sendle/campaigns" do
+    test "Endpoint should receive payload and create records", %{payload: payload, http_url: url} do
+      result =
+        build_conn()
+        |> put_req_header("content-type", "application/json")
+        |> post("/sendle/campaigns", payload)
+
+      assert result = json_response(result, 200)
+
+      assert %{
+               "data" => %{"status" => "accepted"}
+             } = Poison.decode!(result)
+    end
+
     test "Endpoint should return error code payload malformed"
+  end
+
+  describe "GET /sendle/campaigns/:campaign_id" do
+    test "should return 200 - for new campaign", %{payload: payload} do
+      campaign = SchemaFactory.insert(:campaign_rollout)
+
+      campaign_id = campaign.campaign_id
+      name = campaign.name
+
+      result =
+        build_conn()
+        |> put_req_header("content-type", "application/json")
+        |> get("/sendle/campaigns/#{campaign.campaign_id}")
+
+      assert result = json_response(result, 200)
+
+      assert %{
+               "data" => %{
+                 "campaign_id" => ^campaign_id,
+                 "campaign_name" => ^name,
+                 "status" => "new",
+                 "instructions" => _,
+                 "packing_slips" => nil,
+                 "participants" => [first | _] = participants
+               }
+             } = result
+
+      assert is_list(participants)
+
+      assert %{
+               "influencer_id" => _,
+               "products" => assigned_products
+             } = first
+
+      assert is_list(assigned_products)
+    end
+
+    test "should return 404 - for campaign not in system.", %{payload: payload} do
+      result =
+        build_conn()
+        |> put_req_header("content-type", "application/json")
+        |> get("/sendle/campaigns/foobar")
+
+      assert result = json_response(result, 404)
+
+      assert %{
+        "data" => %{
+          "error" => "Campaign not found"
+        }
+      }
+    end
   end
 
   # Picking List and processing.
@@ -16,5 +85,4 @@ defmodule SendleWeb.ApiTest do
     test "Call to this endpoint should return sendle order list"
     test "Each object in this list should contain order code"
   end
-
 end
