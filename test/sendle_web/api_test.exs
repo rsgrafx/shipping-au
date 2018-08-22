@@ -65,23 +65,23 @@ defmodule SendleWeb.ApiTest do
 
       for influencer <- participants do
         assert %{
-                "influencer_id" => _,
-                "products" => assigned_products
-              } = influencer
+                 "influencer_id" => _,
+                 "products" => assigned_products
+               } = influencer
+
         assert is_list(assigned_products)
 
         assert [
-                %{
-                  "campaign_product_id" => _,
-                  "quantity" => quantity,
-                  "size" => size,
-                  "sku" => _
-                }
-              ] = assigned_products
+                 %{
+                   "campaign_product_id" => _,
+                   "quantity" => quantity,
+                   "size" => size,
+                   "sku" => _
+                 }
+               ] = assigned_products
 
         assert is_number(quantity)
         assert is_number(size)
-
       end
     end
 
@@ -102,8 +102,68 @@ defmodule SendleWeb.ApiTest do
   end
 
   # Picking List and processing.
-  describe "POST /sendle/campaign/:campaign_id/process" do
-    test "Call to this endpoint should trigger calls to process orders with Sendle"
+  describe "PUT /sendle/campaign/:campaign_id/process" do
+    test "Call to this endpoint should trigger calls to process orders with Sendle" do
+      campaign = SchemaFactory.insert(:campaign_rollout)
+      # IO.inspect(campaign)
+      [product] = campaign.products
+
+      Enum.map(campaign.participants, fn person ->
+        SchemaFactory.insert(:assigned_product,
+          campaign_rollout_id: campaign.id,
+          campaign_rollout: nil,
+          campaign_product_id: product.id,
+          campaign_participant_id: person.id
+        )
+      end)
+
+      data =
+        %{
+          data: %{
+            participants:
+              Enum.map(campaign.participants, fn influencer ->
+                %{
+                  pickup_date: "2018-09-24",
+                  influencer_id: influencer.influencer_id,
+                  description: "",
+                  kilogram_weight: "1",
+                  cubic_metre_volume: "0.01",
+                  customer_reference: "Nothing to say.",
+                  meta_data: %{}
+                }
+              end)
+          }
+        }
+        |> Poison.encode!()
+
+      result =
+        build_conn()
+        |> put_req_header("content-type", "application/json")
+        |> put("/sendle/campaigns/#{campaign.campaign_id}/process", data)
+
+      assert json_response(result, 200)
+
+      assert %{
+               "packing_slips" => packing_slips
+             } = result
+
+      assert is_list(packing_slips)
+
+      for package_data <- packing_slips do
+        assert %{
+                 "influencer_id" => in_id,
+                 "sendle" => %{
+                   "sendle_reference" => _code,
+                   "cost" => cost,
+                   "order_uuid" => _uuid,
+                   "order_packing_slip" => _,
+                   "tracking_url" => _
+                 },
+                 "address" => %{}
+               } = package_data
+      end
+    end
+
     test "Call to this endpoint should return - processed payload"
     test "When processing this list order for each mailing should be stored to db"
     test "Call to this endpoint should return sendle order list"

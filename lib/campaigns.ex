@@ -75,11 +75,12 @@ defmodule Sendle.Campaigns do
   @doc """
     Fetch Campaign.  From database
   """
-  @spec get_campaign(params :: integer | Keyword.t()) :: CampainRollout.t()
+  @spec get_campaign(params :: integer | Keyword.t()) :: CampaignRollout.t()
   def get_campaign(params) do
     case do_get_campaign(params) do
       nil ->
         :error_not_found
+
       campaign_rollout ->
         Campaign.new(campaign_rollout)
     end
@@ -91,7 +92,7 @@ defmodule Sendle.Campaigns do
     |> preload()
   end
 
-  def do_get_campaign(campaign_id: id) when is_integer(id) do
+  def do_get_campaign(campaign_id: id) do
     CampaignRollout
     |> Repo.get_by(campaign_id: id)
     |> preload()
@@ -99,6 +100,16 @@ defmodule Sendle.Campaigns do
 
   defp preload(campaign) do
     Repo.preload(campaign, [:products, participants: [products: load_products(campaign.id)]])
+  end
+
+  @spec process_request(params :: map()) :: CampaignRollout.t()
+  def process_request(%{"campaign_id" => campaign_id} = data) do
+    {_, data} = atomize(data)
+
+    case do_get_campaign(campaign_id: campaign_id) do
+      %CampaignRollout{} = campaign -> campaign
+      _ -> :error
+    end
   end
 
   def load_products(rollout_id) do

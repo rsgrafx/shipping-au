@@ -1,6 +1,8 @@
 defmodule SendleWeb.Api do
   @moduledoc """
-
+  This module surfaces an HTTP interface into the application.
+    # Decided not to use Phoenix. Too bulky for a simple POC with 3 endpoints.
+    # No HTML is rendering will be needed.
   """
   use Plug.Router
   import Plug.Conn
@@ -43,6 +45,19 @@ defmodule SendleWeb.Api do
       json_response(conn, 200, %{data: campaign})
     else
       _ -> json_response(conn, 404, %{data: %{error: "Campaign not found."}})
+    end
+  end
+
+  put "/sendle/campaigns/:campaign_id/process" do
+    with camp_id when is_integer(camp_id) <- to_integer(campaign_id),
+         %Campaign{} = campaign <- Sendle.Campaigns.process_request(conn.params) do
+      json_response(conn, 201, %{data: campaign})
+    else
+      {:error, :could_not_process_order} ->
+        json_response(conn, 422, %{data: %{error: "Not able to process sendle order"}})
+
+      _ ->
+        json_response(conn, 400, %{data: %{error: "Bad Request"}})
     end
   end
 
