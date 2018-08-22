@@ -4,8 +4,11 @@ defmodule Sendle.Schemas.CampaignParticipant do
 
   @type t :: %__MODULE__{}
 
+  alias Sendle.Schemas.{CampaignRollout, CampaignProduct}
+
   schema "campaign_participants" do
-    belongs_to(:campaign_rollout, Sendle.Schema.CampaignRollout)
+    belongs_to(:campaign_rollout, CampaignRollout)
+    has_many(:products, CampaignProduct)
     field(:campaign_id, :integer)
     field(:influencer_id, :integer)
     field(:full_name, :string, default: false)

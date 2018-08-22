@@ -26,12 +26,12 @@ defmodule SendleWeb.Api do
   end
 
   post "/sendle/campaigns" do
-    with %Campaign{} = campaign <- Sendle.Campaigns.create(conn.params),
+    with %Campaign{} = _campaign <- Sendle.Campaigns.create(conn.params),
          response = Poison.encode!(%{data: %{status: :accepted}}) do
       json_response(conn, 200, response)
     else
       _ ->
-        json_response(conn, 401, %{data: "TODO"})
+        json_response(conn, 401, %{data: %{error: "Could not process the payload."}})
     end
   end
 
@@ -47,7 +47,7 @@ defmodule SendleWeb.Api do
   end
 
   defp json_response(conn, status, response) do
-    body = response = Poison.encode!(response)
+    body = Poison.encode!(response)
 
     conn
     |> put_resp_content_type("application/json")

@@ -44,27 +44,38 @@ defmodule Sendle.Campaigns.Participant do
       shipping_size: data.size,
       weight: data.weight,
       quantity: data.quantity,
-      shipping_instructions: data.note
+      shipping_instructions: data.note,
+      products: build_products(data)
     )
   end
 
-  @doc "Building from the API."
+  # "Building from the API."
   def build(data) do
     address = data.address
 
-    data =
-      struct(__MODULE__,
-        full_name: address.full_name,
-        email: address[:email] || "",
-        address: build_address(address),
-        note_for_shipper: address[:note] || "",
-        shipping_size: nil,
-        shipping_weight: nil,
-        quantity: nil
-      )
+    struct(__MODULE__,
+      full_name: address.full_name,
+      email: address[:email] || "",
+      address: build_address(address),
+      note_for_shipper: address[:note] || "",
+      shipping_size: nil,
+      shipping_weight: nil,
+      quantity: nil
+    )
   end
 
   defp build_address(addr) do
     Address.build(addr)
+  end
+
+  defp build_products(%{products: products} = data) do
+    Enum.map(products, fn product ->
+      %{
+        sku: product.sku,
+        campaign_product_id: product.id,
+        quantity: data.quantity,
+        size: data.size
+      }
+    end)
   end
 end
