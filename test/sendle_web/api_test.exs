@@ -10,7 +10,7 @@ defmodule SendleWeb.ApiTest do
   end
 
   describe "POST /sendle/campaigns" do
-    test "Endpoint should receive payload and create records", %{payload: payload, http_url: url} do
+    test "Endpoint should receive payload and create records", %{payload: payload} do
       result =
         build_conn()
         |> put_req_header("content-type", "application/json")
@@ -27,8 +27,18 @@ defmodule SendleWeb.ApiTest do
   end
 
   describe "GET /sendle/campaigns/:campaign_id" do
-    test "should return 200 - for new campaign", %{payload: payload} do
+    test "should return 200 - for new campaign" do
       campaign = SchemaFactory.insert(:campaign_rollout)
+      [product] = campaign.products
+
+      Enum.map(campaign.participants, fn person ->
+        SchemaFactory.insert(:assigned_product,
+          campaign_rollout_id: campaign.id,
+          campaign_rollout: nil,
+          campaign_product_id: product.id,
+          campaign_participant_id: person.id
+        )
+      end)
 
       campaign_id = campaign.campaign_id
       name = campaign.name
@@ -47,21 +57,35 @@ defmodule SendleWeb.ApiTest do
                  "status" => "new",
                  "instructions" => _,
                  "packing_slips" => nil,
-                 "participants" => [first | _] = participants
+                 "participants" => participants
                }
              } = result
 
       assert is_list(participants)
 
-      assert %{
-               "influencer_id" => _,
-               "products" => assigned_products
-             } = first
+      for influencer <- participants do
+        assert %{
+                "influencer_id" => _,
+                "products" => assigned_products
+              } = influencer
+        assert is_list(assigned_products)
 
-      assert is_list(assigned_products)
+        assert [
+                %{
+                  "campaign_product_id" => _,
+                  "quantity" => quantity,
+                  "size" => size,
+                  "sku" => _
+                }
+              ] = assigned_products
+
+        assert is_number(quantity)
+        assert is_number(size)
+
+      end
     end
 
-    test "should return 404 - for campaign not in system.", %{payload: payload} do
+    test "should return 404 - for campaign not in system." do
       result =
         build_conn()
         |> put_req_header("content-type", "application/json")

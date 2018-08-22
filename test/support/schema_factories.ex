@@ -4,7 +4,8 @@ defmodule Sendle.SchemaFactory do
   alias Sendle.Schemas.{
     CampaignRollout,
     CampaignParticipant,
-    CampaignProduct
+    CampaignProduct,
+    ProductParticipant
   }
 
   ### - Database specific factories
@@ -15,7 +16,7 @@ defmodule Sendle.SchemaFactory do
       campaign_id: :rand.uniform(50),
       instructions: "Make sure this gets out by Tuesday",
       meta: %{"mail_type" => "DHL"},
-      participants: [build(:campaign_participant)],
+      participants: build_list(3, :campaign_participant),
       products: [build(:campaign_product)]
     }
   end
@@ -36,7 +37,18 @@ defmodule Sendle.SchemaFactory do
       size: 2.3,
       weight: nil,
       quantity: 3,
-      shipping_instructions: "Leave at Front desk"
+      shipping_instructions: "Leave at Front desk",
+      products: []
+    }
+  end
+
+  def assigned_product_factory do
+    rollout = insert(:campaign_rollout)
+
+    %ProductParticipant{
+      campaign_rollout_id: rollout.id,
+      campaign_participant_id: insert(:campaign_participant, campaign_rollout: rollout).id,
+      campaign_product_id: insert(:campaign_product).id
     }
   end
 

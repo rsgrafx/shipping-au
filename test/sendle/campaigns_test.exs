@@ -2,6 +2,7 @@ defmodule Sendle.CampaignsTest do
   use Sendle.DataCase
 
   alias Sendle.SchemaFactory, as: SF
+  alias Sendle.Schemas.CampaignRollout
 
   @payload_file "test/support/fixture/incoming_requests/sendle-request-payload.json"
 
@@ -79,13 +80,9 @@ defmodule Sendle.CampaignsTest do
     } do
       # Given a request has been submitted.
       # A Vamp team member should be able to access PickingList.
-
-      campaign =
-        payload
-        |> Campaigns.create()
-        |> Campaigns.save()
-
-      alias Sendle.Schemas.{CampaignRollout, CampaignParticipant}
+      payload
+      |> Campaigns.create()
+      |> Campaigns.save()
 
       assert [campaign] =
                CampaignRollout
@@ -98,12 +95,10 @@ defmodule Sendle.CampaignsTest do
       assert campaign.instructions == "Missing some small tags"
     end
 
-    test "retrieves products from database referencing campaign_id", %{payload: payload} do
+    test "retrieves products from database referencing campaign_id" do
       campaign_rollout = SF.insert(:campaign_rollout)
 
       campaign_id = campaign_rollout.campaign_id
-
-      alias Sendle.Schemas.{CampaignRollout, CampaignParticipant}
 
       assert %Campaign{campaign_id: ^campaign_id, participants: influencers, products: products} =
                Campaigns.get_campaign(campaign_id: campaign_rollout.campaign_id)
