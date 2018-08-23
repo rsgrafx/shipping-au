@@ -8,6 +8,15 @@ defmodule Sendle.Requests.QuoteTest do
   @valid File.read!("test/support/fixture/api_stubs/quote.json")
   # @creds Sendle.get_api_credentials()
 
+  setup do
+    Application.put_env(:sendle, :api_credentials, %{
+      api_endpoint: "http://localhost:8383",
+      sendle_auth_id: System.get_env("TEST_SENDLE_ID"),
+      sendle_api_key: System.get_env("TEST_SENDLE_API_KEY")
+    })
+    :ok
+  end
+
   describe "new/1" do
     test "with proper params should return `Quote` struct" do
       quotation =

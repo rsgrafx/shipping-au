@@ -50,7 +50,9 @@ defmodule SendleWeb.Api do
 
   put "/sendle/campaigns/:campaign_id/process" do
     with camp_id when is_integer(camp_id) <- to_integer(campaign_id),
-         %Campaign{} = campaign <- Sendle.Campaigns.process_request(conn.params) do
+         %Campaign{} = campaign <- Sendle.Campaigns.get_campaign(campaign_id: camp_id),
+         {:ok, order_requests} <- Sendle.Campaigns.process_orders(campaign, conn.body_params),
+         {:ok, request_responses} <- Sendle.Campaigns.send_requests(order_requests) do
       json_response(conn, 201, %{data: campaign})
     else
       {:error, :could_not_process_order} ->

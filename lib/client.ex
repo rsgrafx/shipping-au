@@ -32,7 +32,8 @@ defmodule Sendle.HTTP.Client do
     creds.api_endpoint <> endpoint
   end
 
-  defp convert({:ok, %{status_code: 200} = response}) do
+  defp convert({:ok, %{status_code: code} = response})
+  when code in 200..299 do
     body = Poison.decode!(response.body)
 
     struct(Response,

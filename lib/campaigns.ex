@@ -102,14 +102,54 @@ defmodule Sendle.Campaigns do
     Repo.preload(campaign, [:products, participants: [products: load_products(campaign.id)]])
   end
 
-  @spec process_request(params :: map()) :: CampaignRollout.t()
-  def process_request(%{"campaign_id" => campaign_id} = data) do
-    {_, data} = atomize(data)
+  @spec process_orders(
+          campaign :: Campaign.t(),
+          params :: map()
+        ) :: [map()]
+  def process_orders(campaign, request_data) do
+    {_, %{data: request_data}} = atomize(request_data)
 
-    case do_get_campaign(campaign_id: campaign_id) do
-      %CampaignRollout{} = campaign -> campaign
-      _ -> :error
-    end
+    results =
+      Enum.map(campaign.participants, fn inflcer ->
+        Enum.filter(request_data.participants, &(&1.influencer_id == inflcer.influencer_id))
+        |> case do
+          [] -> :error_none_found
+          [address_data] -> order_request_payload(inflcer, address_data)
+        end
+      end)
+
+    {:ok, results}
+  end
+
+  @spec send_requests(order_lists :: [map()]) :: {:ok, [map()]} | {:error, any()}
+  def send_requests(order_lists) do
+    {:error, order_lists}
+  end
+
+  @doc """
+   Builds list of payloads to send to Sendle.
+  """
+  def order_request_payload(influencer, packing_data, sender \\ :au) do
+    payload = %{
+      sender: warehouse(sender),
+      receiver: %{
+        instructions: "",
+        contact: %{
+          name: influencer.full_name,
+          email: influencer.email,
+          company: ""
+        },
+        address: %{
+          address_line1: influencer.address.address_line1,
+          suburb: influencer.address.city,
+          state_name: influencer.address.state_name,
+          postcode: influencer.address.postcode,
+          country: influencer.address.country
+        }
+      }
+    }
+
+    Map.merge(payload, packing_data)
   end
 
   def load_products(rollout_id) do
@@ -118,5 +158,23 @@ defmodule Sendle.Campaigns do
       where: pp.campaign_rollout_id == ^rollout_id,
       select: product
     )
+  end
+
+  def warehouse(sender_key, instructions \\ "No instructions supplied by receiver") do
+    vamp_address_locations = %{
+      au: %{
+        contact: %{name: "Admin", phone: "61 1300 606 614", company: "Vamp.me"},
+        address: %{
+          address_line1: "50 King Street",
+          suburb: "Sydney",
+          state_name: "NSW",
+          postcode: "2000",
+          country: "Australia"
+        },
+        instructions: instructions
+      }
+    }
+
+    Map.get(vamp_address_locations, sender_key)
   end
 end
