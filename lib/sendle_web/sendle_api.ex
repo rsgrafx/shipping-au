@@ -17,6 +17,7 @@ defmodule SendleWeb.Api do
 
   plug(:dispatch)
 
+  alias Sendle.Campaigns
   alias Sendle.Campaigns.Campaign
 
   get "/ping" do
@@ -28,7 +29,7 @@ defmodule SendleWeb.Api do
   end
 
   post "/sendle/campaigns" do
-    with %Campaign{} = _campaign <- Sendle.Campaigns.create(conn.params),
+    with %Campaign{} = _campaign <- Campaigns.create(conn.params),
          response = Poison.encode!(%{data: %{status: :accepted}}) do
       json_response(conn, 200, response)
     else
@@ -41,7 +42,7 @@ defmodule SendleWeb.Api do
     %{"campaign_id" => campaign_id} = conn.params
 
     with camp_id when is_integer(camp_id) <- to_integer(campaign_id),
-         %Campaign{} = campaign <- Sendle.Campaigns.get_campaign(campaign_id: camp_id) do
+         %Campaign{} = campaign <- Campaigns.get_campaign(campaign_id: camp_id) do
       json_response(conn, 200, %{data: campaign})
     else
       _ -> json_response(conn, 404, %{data: %{error: "Campaign not found."}})
@@ -50,9 +51,10 @@ defmodule SendleWeb.Api do
 
   put "/sendle/campaigns/:campaign_id/process" do
     with camp_id when is_integer(camp_id) <- to_integer(campaign_id),
-         %Campaign{} = campaign <- Sendle.Campaigns.get_campaign(campaign_id: camp_id),
-         {:ok, order_requests} <- Sendle.Campaigns.process_orders(campaign, conn.body_params),
-         {:ok, request_responses} <- Sendle.Campaigns.send_requests(order_requests) do
+         %Campaign{} = campaign <- Campaigns.get_campaign(campaign_id: camp_id),
+         {:ok, order_requests} <- Campaigns.process_orders(campaign, conn.body_params),
+         {:ok, request_responses} <- Campaigns.send_requests(order_requests),
+         campaign = Campaigns.build_response(campaign, request_responses) do
       json_response(conn, 201, %{data: campaign})
     else
       {:error, :could_not_process_orders} ->

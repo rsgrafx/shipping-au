@@ -125,9 +125,10 @@ defmodule Sendle.Campaigns do
 
   @spec send_requests(order_lists :: [map()]) :: {:ok, [map()]} | {:error, any()}
   def send_requests(order_lists) do
-    Enum.map(order_lists, fn order_payload ->
-      CreateOrder.request(order_payload)
-    end)
+    {:ok,
+     Enum.map(order_lists, fn order_payload ->
+       CreateOrder.request(order_payload)
+     end)}
   end
 
   @doc """
@@ -171,6 +172,29 @@ defmodule Sendle.Campaigns do
       where: pp.campaign_rollout_id == ^rollout_id,
       select: product
     )
+  end
+
+  def build_response(campaign, responses) do
+    %{campaign | packing_slips: Enum.map(responses, &pluck_sendle_data/1)}
+  end
+
+  defp pluck_sendle_data(%{status: 201} = data) do
+    %{
+      influencer_id: nil,
+      sendle:
+        Map.take(data.body, [
+          "order_id",
+          "order_url",
+          "price",
+          "route",
+          "sendle_reference",
+          "tracking_url"
+        ])
+    }
+  end
+
+  defp pluck_sendle_data(data) do
+    %{error: data.body}
   end
 
   def warehouse(sender_key, instructions \\ "No instructions supplied by receiver") do

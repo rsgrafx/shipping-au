@@ -150,11 +150,13 @@ defmodule SendleWeb.ApiTest do
           |> put_req_header("content-type", "application/json")
           |> put("/sendle/campaigns/#{campaign.campaign_id}/process", data)
 
-        assert json_response(result, 200)
+        assert json_response(result, 201)
 
         assert %{
-                 "packing_slips" => packing_slips
-               } = result
+                 "data" => %{
+                   "packing_slips" => packing_slips
+                 }
+               } = Poison.decode!(result.resp_body)
 
         assert is_list(packing_slips)
 
@@ -163,20 +165,17 @@ defmodule SendleWeb.ApiTest do
                    "influencer_id" => in_id,
                    "sendle" => %{
                      "sendle_reference" => _code,
-                     "cost" => cost,
-                     "order_uuid" => _uuid,
-                     "order_packing_slip" => _,
+                     "price" => cost,
+                     "order_id" => _uuid,
+                     "order_url" => _,
                      "tracking_url" => _
-                   },
-                   "address" => %{}
+                   }
                  } = package_data
+          assert is_integer(in_id)
         end
       end
     end
 
-    test "Call to this endpoint should return - processed payload"
     test "When processing this list order for each mailing should be stored to db"
-    test "Call to this endpoint should return sendle order list"
-    test "Each object in this list should contain order code"
   end
 end
