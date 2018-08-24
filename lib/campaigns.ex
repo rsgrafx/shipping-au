@@ -11,7 +11,8 @@ defmodule Sendle.Campaigns do
   alias Sendle.Schemas.{
     CampaignRollout,
     CampaignParticipant,
-    ProductParticipant
+    ProductParticipant,
+    SendleResponse
   }
 
   alias Sendle.Requests.CreateOrder
@@ -125,10 +126,45 @@ defmodule Sendle.Campaigns do
 
   @spec send_requests(order_lists :: [map()]) :: {:ok, [map()]} | {:error, any()}
   def send_requests(order_lists) do
-    {:ok,
-     Enum.map(order_lists, fn order_payload ->
-       CreateOrder.request(order_payload)
-     end)}
+    results =
+      Enum.map(order_lists, fn payload ->
+        {payload, Task.async(fn -> CreateOrder.request(payload) end)}
+      end)
+      |> Enum.map(fn {order, task} ->
+        %{body: body} = result = Map.take(Task.await(task), [:body, :status])
+
+        body = Map.merge(%{"influencer_id" => order.influencer_id}, body)
+
+        if result.status == 201 do
+          _ = save_response(order.influencer_id, body)
+        end
+
+        %{result | body: body}
+      end)
+
+    {:ok, results}
+  end
+
+  @doc """
+  Save response to `sendle_responses` table.
+  """
+  @spec save_response(integer(), map()) ::
+          {:ok, Ecto.Schema.t()} | {:error, :cant_find_campaign_participant}
+  def save_response(influencer_id, sendle_response) do
+    case do_get_campaign_participant(influencer_id) do
+      nil ->
+        {:error, :cant_find_campaign_participant}
+
+      participant ->
+        participant
+        |> Ecto.build_assoc(:sendle_responses)
+        |> SendleResponse.changeset(sendle_response)
+        |> Repo.insert()
+    end
+  end
+
+  defp do_get_campaign_participant(influencer_id) do
+    Repo.get_by(CampaignParticipant, influencer_id: influencer_id)
   end
 
   @doc """
@@ -179,18 +215,21 @@ defmodule Sendle.Campaigns do
   end
 
   defp pluck_sendle_data(%{status: 201} = data) do
-    %{
-      influencer_id: nil,
-      sendle:
-        Map.take(data.body, [
-          "order_id",
-          "order_url",
-          "price",
-          "route",
-          "sendle_reference",
-          "tracking_url"
-        ])
-    }
+    %{body: %{"influencer_id" => infl_id}} = data
+
+    %{"influencer_id" => infl_id}
+    |> Map.merge(
+      Map.take(data.body, [
+        "order_id",
+        "order_url",
+        "price",
+        "route",
+        "sendle_reference",
+        "tracking_url",
+        "state",
+        "scheduling"
+      ])
+    )
   end
 
   defp pluck_sendle_data(data) do

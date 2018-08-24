@@ -3,6 +3,8 @@ defmodule SendleWeb.ApiTest do
 
   use ExVCR.Mock, adapter: ExVCR.Adapter.Hackney
 
+  alias Sendle.Repo
+
   # Creating the Picking List.
 
   setup do
@@ -161,21 +163,35 @@ defmodule SendleWeb.ApiTest do
         assert is_list(packing_slips)
 
         for package_data <- packing_slips do
+          %{"influencer_id" => in_id} = package_data
+
+          %{
+            sendle_responses: [
+              %{
+                order_id: order_id,
+                tracking_url: tracking_url,
+                order_url: order_url,
+                sendle_reference: reference
+              }
+            ]
+          } =
+            Repo.get_by(Sendle.Schemas.CampaignParticipant, influencer_id: in_id)
+            |> Repo.preload(:sendle_responses)
+
           assert %{
-                   "influencer_id" => in_id,
-                   "sendle" => %{
-                     "sendle_reference" => _code,
-                     "price" => cost,
-                     "order_id" => _uuid,
-                     "order_url" => _,
-                     "tracking_url" => _
-                   }
+                   "influencer_id" => ^in_id,
+                   "sendle_reference" => ^reference,
+                   "price" => _,
+                   "order_id" => ^order_id,
+                   "order_url" => ^order_url,
+                   "tracking_url" => ^tracking_url,
+                   "state" => _,
+                   "scheduling" => _
                  } = package_data
+
           assert is_integer(in_id)
         end
       end
     end
-
-    test "When processing this list order for each mailing should be stored to db"
   end
 end
