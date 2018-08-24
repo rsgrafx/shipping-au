@@ -115,7 +115,6 @@ defmodule Sendle.CampaignsTest do
   describe "process_orders/2" do
     setup do
       campaign = SF.insert(:campaign_rollout)
-      # IO.inspect(campaign)
       [product] = campaign.products
 
       Enum.map(campaign.participants, fn person ->
@@ -162,7 +161,7 @@ defmodule Sendle.CampaignsTest do
         %{
           cubic_metre_volume: "0.01",
           customer_reference: "Nothing to say.",
-          description: "",
+          description: "No additional description given",
           influencer_id: _,
           kilogram_weight: "1",
           meta_data: %{},

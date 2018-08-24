@@ -1,11 +1,14 @@
 defmodule SendleWeb.ApiTest do
   use Sendle.ConnCase
 
+  use ExVCR.Mock, adapter: ExVCR.Adapter.Hackney
+
   # Creating the Picking List.
 
   setup do
     payload = File.read!("test/support/fixture/incoming_requests/sendle-request-payload.json")
     url = Application.get_env(:sendle, :url)
+    ExVCR.Config.cassette_library_dir("test/support/fixture/vcr_cassettes")
     {:ok, payload: payload, http_url: url}
   end
 
@@ -104,8 +107,13 @@ defmodule SendleWeb.ApiTest do
   # Picking List and processing.
   describe "PUT /sendle/campaign/:campaign_id/process" do
     test "Call to this endpoint should trigger calls to process orders with Sendle" do
+      Application.put_env(:sendle, :api_credentials, %{
+        api_endpoint: "https://sandbox.sendle.com",
+        sendle_auth_id: System.get_env("TEST_SENDLE_ID"),
+        sendle_api_key: System.get_env("TEST_SENDLE_API_KEY")
+      })
+
       campaign = SchemaFactory.insert(:campaign_rollout)
-      # IO.inspect(campaign)
       [product] = campaign.products
 
       Enum.map(campaign.participants, fn person ->
@@ -136,31 +144,33 @@ defmodule SendleWeb.ApiTest do
         }
         |> Poison.encode!()
 
-      result =
-        build_conn()
-        |> put_req_header("content-type", "application/json")
-        |> put("/sendle/campaigns/#{campaign.campaign_id}/process", data)
+      use_cassette "order_requests_all" do
+        result =
+          build_conn()
+          |> put_req_header("content-type", "application/json")
+          |> put("/sendle/campaigns/#{campaign.campaign_id}/process", data)
 
-      assert json_response(result, 200)
+        assert json_response(result, 200)
 
-      assert %{
-               "packing_slips" => packing_slips
-             } = result
-
-      assert is_list(packing_slips)
-
-      for package_data <- packing_slips do
         assert %{
-                 "influencer_id" => in_id,
-                 "sendle" => %{
-                   "sendle_reference" => _code,
-                   "cost" => cost,
-                   "order_uuid" => _uuid,
-                   "order_packing_slip" => _,
-                   "tracking_url" => _
-                 },
-                 "address" => %{}
-               } = package_data
+                 "packing_slips" => packing_slips
+               } = result
+
+        assert is_list(packing_slips)
+
+        for package_data <- packing_slips do
+          assert %{
+                   "influencer_id" => in_id,
+                   "sendle" => %{
+                     "sendle_reference" => _code,
+                     "cost" => cost,
+                     "order_uuid" => _uuid,
+                     "order_packing_slip" => _,
+                     "tracking_url" => _
+                   },
+                   "address" => %{}
+                 } = package_data
+        end
       end
     end
 

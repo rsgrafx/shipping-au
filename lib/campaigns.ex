@@ -14,6 +14,8 @@ defmodule Sendle.Campaigns do
     ProductParticipant
   }
 
+  alias Sendle.Requests.CreateOrder
+
   alias Sendle.Repo
 
   @type campaign :: Campaign.t()
@@ -123,17 +125,28 @@ defmodule Sendle.Campaigns do
 
   @spec send_requests(order_lists :: [map()]) :: {:ok, [map()]} | {:error, any()}
   def send_requests(order_lists) do
-    {:error, order_lists}
+    Enum.map(order_lists, fn order_payload ->
+      CreateOrder.request(order_payload)
+    end)
   end
 
   @doc """
    Builds list of payloads to send to Sendle.
   """
   def order_request_payload(influencer, packing_data, sender \\ :au) do
+    packing_data =
+      case packing_data.description do
+        info when is_nil(info) when info == "" ->
+          %{packing_data | description: "No additional description given"}
+
+        _ ->
+          packing_data
+      end
+
     payload = %{
       sender: warehouse(sender),
       receiver: %{
-        instructions: "",
+        instructions: influencer.note_for_shipper || "No additional instructions given",
         contact: %{
           name: influencer.full_name,
           email: influencer.email,

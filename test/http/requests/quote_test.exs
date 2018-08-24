@@ -14,6 +14,7 @@ defmodule Sendle.Requests.QuoteTest do
       sendle_auth_id: System.get_env("TEST_SENDLE_ID"),
       sendle_api_key: System.get_env("TEST_SENDLE_API_KEY")
     })
+
     :ok
   end
 

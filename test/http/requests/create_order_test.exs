@@ -16,6 +16,7 @@ defmodule Sendle.Requests.CreateOrderTest do
         sendle_auth_id: System.get_env("TEST_SENDLE_ID"),
         sendle_api_key: System.get_env("TEST_SENDLE_API_KEY")
       })
+
       :ok
     end
 
@@ -24,11 +25,12 @@ defmodule Sendle.Requests.CreateOrderTest do
 
       use_cassette "incorrect_credentials" do
         assert %Sendle.HTTP.RequestError{
-          body: _,
-          code: "unauthorised",
-          message: "The authorisation details are not valid. Either the Sendle ID or API key are incorrect.",
-          status: 401
-        } = CreateOrder.request(request)
+                 body: _,
+                 code: "unauthorised",
+                 message:
+                   "The authorisation details are not valid. Either the Sendle ID or API key are incorrect.",
+                 status: 401
+               } = CreateOrder.request(request)
       end
     end
 
@@ -37,11 +39,12 @@ defmodule Sendle.Requests.CreateOrderTest do
 
       use_cassette "missing_details_order" do
         assert %Sendle.HTTP.RequestError{
-          body: _,
-          code: "unprocessable_entity",
-          message: "The data you supplied is invalid. Error messages are in the messages section. Please fix those fields and try again.",
-          status: 422
-        } = CreateOrder.request(request)
+                 body: _,
+                 code: "unprocessable_entity",
+                 message:
+                   "The data you supplied is invalid. Error messages are in the messages section. Please fix those fields and try again.",
+                 status: 422
+               } = CreateOrder.request(request)
       end
     end
 
@@ -50,10 +53,31 @@ defmodule Sendle.Requests.CreateOrderTest do
 
       use_cassette "create_order" do
         assert %Sendle.HTTP.Response{
-          body: _,
-          status: 201,
-          response_headers: _
-        } = CreateOrder.request(request) |> IO.inspect()
+                 body: body,
+                 status: 201,
+                 response_headers: _
+               } = CreateOrder.request(request)
+
+        assert %{
+                 "cubic_metre_volume" => "0.01",
+                 "customer_reference" => "Nothing to say.",
+                 "description" => "Vamp.me Order",
+                 "kilogram_weight" => "1.0",
+                 "labels" => nil,
+                 "metadata" => %{},
+                 "order_id" => "6c4b6185-0680-4418-88b2-6a86c4bfc15e",
+                 "order_url" =>
+                   "https://sendle-sandbox.herokuapp.com/api/orders/6c4b6185-0680-4418-88b2-6a86c4bfc15e",
+                 "price" => %{
+                   "gross" => %{"amount" => 9.95, "currency" => "AUD"},
+                   "net" => %{"amount" => 9.05, "currency" => "AUD"},
+                   "tax" => %{"amount" => 0.9, "currency" => "AUD"}
+                 },
+                 "route" => %{"description" => "Sydney to Sydney", "type" => "same-city"},
+                 "sendle_reference" => "SKFHDS",
+                 "state" => "Booking",
+                 "tracking_url" => "https://sendle-sandbox.herokuapp.com/tracking?ref=SKFHDS"
+               } = body
       end
     end
   end

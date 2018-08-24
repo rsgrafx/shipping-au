@@ -33,7 +33,7 @@ defmodule Sendle.HTTP.Client do
   end
 
   defp convert({:ok, %{status_code: code} = response})
-  when code in 200..299 do
+       when code in 200..299 do
     body = Poison.decode!(response.body)
 
     struct(Response,

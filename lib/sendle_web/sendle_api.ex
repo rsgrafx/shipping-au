@@ -55,10 +55,10 @@ defmodule SendleWeb.Api do
          {:ok, request_responses} <- Sendle.Campaigns.send_requests(order_requests) do
       json_response(conn, 201, %{data: campaign})
     else
-      {:error, :could_not_process_order} ->
+      {:error, :could_not_process_orders} ->
         json_response(conn, 422, %{data: %{error: "Not able to process sendle order"}})
 
-      _ ->
+      {:error, _responses} ->
         json_response(conn, 400, %{data: %{error: "Bad Request"}})
     end
   end

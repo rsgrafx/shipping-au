@@ -11,9 +11,11 @@ defmodule Sendle.SchemaFactory do
   ### - Database specific factories
 
   def campaign_rollout_factory do
+    campaign_id = sequence(:campaign_id, & &1) + :rand.uniform(9_000_000)
+
     %CampaignRollout{
       name: sequence(:name, &"Nike Rollout - #{&1}"),
-      campaign_id: :rand.uniform(50),
+      campaign_id: campaign_id,
       instructions: "Make sure this gets out by Tuesday",
       meta: %{"mail_type" => "DHL"},
       participants: build_list(3, :campaign_participant),

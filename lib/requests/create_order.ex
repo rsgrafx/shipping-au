@@ -1,5 +1,4 @@
 defmodule Sendle.Requests.CreateOrder do
-
   alias Sendle.HTTP.Client
   alias Sendle.Requests.Response
 
