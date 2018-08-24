@@ -1,6 +1,6 @@
 defmodule Sendle.Requests.CreateOrder do
   alias Sendle.HTTP.Client
-  alias Sendle.Requests.Response
+  alias Sendle.HTTP.Response
 
   @spec request(map()) :: Response.t()
   def request(quote_request) do

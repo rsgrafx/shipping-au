@@ -77,7 +77,7 @@ defmodule Sendle.Campaigns do
   @doc """
     Fetch Campaign.  From database
   """
-  @spec get_campaign(params :: integer | Keyword.t()) :: CampaignRollout.t()
+  @spec get_campaign(params :: integer | Keyword.t()) :: Campaign.t()
   def get_campaign(params) do
     case do_get_campaign(params) do
       nil ->
@@ -107,7 +107,7 @@ defmodule Sendle.Campaigns do
   @spec process_orders(
           campaign :: Campaign.t(),
           params :: map()
-        ) :: [map()]
+        ) :: {:ok, [map()]}
   def process_orders(campaign, request_data) do
     {_, %{data: request_data}} = atomize(request_data)
 
