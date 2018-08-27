@@ -11,9 +11,11 @@ defmodule Sendle.SchemaFactory do
   ### - Database specific factories
 
   def campaign_rollout_factory do
+    campaign_id = sequence(:campaign_id, & &1) + :rand.uniform(9_000_000)
+
     %CampaignRollout{
       name: sequence(:name, &"Nike Rollout - #{&1}"),
-      campaign_id: :rand.uniform(50),
+      campaign_id: campaign_id,
       instructions: "Make sure this gets out by Tuesday",
       meta: %{"mail_type" => "DHL"},
       participants: build_list(3, :campaign_participant),
@@ -24,14 +26,14 @@ defmodule Sendle.SchemaFactory do
   def campaign_participant_factory do
     %CampaignParticipant{
       campaign_id: 12,
-      influencer_id: 121,
-      full_name: "Earvin Magic Johnson",
-      email: sequence(:email, &"vamp-user-#{&1}@example.com"),
+      influencer_id: :rand.uniform(1_000_100) + sequence(:influencer_id, fn n -> n end),
+      full_name: Faker.Name.name(),
+      email: Faker.Internet.email(),
       address_line1: "12 Foo Bar st",
       address_line2: "Lot 11",
       city: "Cabbage Tree",
       state_name: "VIC",
-      country: "Austratia",
+      country: "Australia",
       postcode: "3364",
       note: nil,
       size: 2.3,

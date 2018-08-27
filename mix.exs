@@ -36,6 +36,7 @@ defmodule Sendle.MixProject do
       {:plug, "~> 1.5.0"},
       {:ex_machina, "~> 2.2", only: [:dev, :test]},
       {:exvcr, "~> 0.10", only: :test},
+      {:faker, "~> 0.10", only: [:dev, :test]},
       {:dialyxir, "~> 0.5", only: :dev},
       {:mox, "~> 0.4.0", only: [:test]},
       {:bypass, "~> 0.8", only: [:test]},

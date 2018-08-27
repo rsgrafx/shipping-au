@@ -1,0 +1,43 @@
+[
+  {
+    "request": {
+      "body": "{\"sender\":{\"instructions\":\"No instructions supplied by receiver\",\"contact\":{\"phone\":\"61 1300 606 614\",\"name\":\"Admin\",\"company\":\"Vamp.me\"},\"address\":{\"suburb\":\"Sydney\",\"state_name\":\"NSW\",\"postcode\":\"2000\",\"country\":\"Australia\",\"city\":\"Sydney\",\"address_line1\":\"50 King Street\"}},\"receiver\":{\"instructions\":\"notes supplied specifically for order\",\"contact\":{\"name\":\"Ms. Lexus Reichert II\",\"email\":\"foo0@email.com\",\"company\":\"\"},\"address\":{\"suburb\":\"Newtown\",\"state_name\":\"NSW\",\"postcode\":2042,\"country\":\"Australia\",\"address_line1\":\"118-132 Enmore Rd\"}},\"pickup_date\":\"2018-09-24\",\"meta_data\":{},\"kilogram_weight\":\"1\",\"influencer_id\":77,\"description\":\"Vamp.me Order\",\"customer_reference\":\"Nothing to say.\",\"cubic_metre_volume\":\"0.01\"}",
+      "headers": {
+        "content-type": "application/json",
+        "accept": "application/json"
+      },
+      "method": "post",
+      "options": {
+        "basic_auth": [
+          "orion_engleton_sendl",
+          "h6FTwSV6mpdkgRmf9Z2bf4Bk"
+        ]
+      },
+      "request_body": "",
+      "url": "https://sandbox.sendle.com/api/orders"
+    },
+    "response": {
+      "binary": false,
+      "body": "{\"order_id\":\"6c4b6185-0680-4418-88b2-6a86c4bfc15e\",\"state\":\"Booking\",\"order_url\":\"https://sendle-sandbox.herokuapp.com/api/orders/6c4b6185-0680-4418-88b2-6a86c4bfc15e\",\"sendle_reference\":\"SKFHDS\",\"tracking_url\":\"https://sendle-sandbox.herokuapp.com/tracking?ref=SKFHDS\",\"metadata\":{},\"labels\":null,\"scheduling\":{\"is_cancellable\":true,\"pickup_date\":\"2018-09-24\",\"picked_up_on\":null,\"delivered_on\":null,\"estimated_delivery_date_minimum\":null,\"estimated_delivery_date_maximum\":null},\"description\":\"Vamp.me Order\",\"kilogram_weight\":\"1.0\",\"cubic_metre_volume\":\"0.01\",\"customer_reference\":\"Nothing to say.\",\"sender\":{\"contact\":{\"name\":\"Admin\",\"phone\":\"61 1300 606 614\",\"email\":\"orion.engleton+sendle-test@gmail.com\",\"company\":\"Vamp.me\",\"sendle_id\":\"orion_engleton_sendl\"},\"address\":{\"address_line1\":\"50 King Street\",\"address_line2\":null,\"suburb\":\"Sydney\",\"state_name\":\"NSW\",\"postcode\":\"2000\",\"country\":\"Australia\"},\"instructions\":\"No instructions supplied by receiver\"},\"receiver\":{\"contact\":{\"name\":\"Ms. Lexus Reichert II\",\"phone\":null,\"email\":\"foo0@email.com\",\"company\":null},\"address\":{\"address_line1\":\"118-132 Enmore Rd\",\"address_line2\":null,\"suburb\":\"Newtown\",\"state_name\":\"NSW\",\"postcode\":\"2042\",\"country\":\"Australia\"},\"instructions\":\"notes supplied specifically for order\"},\"route\":{\"type\":\"same-city\",\"description\":\"Sydney to Sydney\"},\"price\":{\"gross\":{\"amount\":9.95,\"currency\":\"AUD\"},\"net\":{\"amount\":9.05,\"currency\":\"AUD\"},\"tax\":{\"amount\":0.9,\"currency\":\"AUD\"}}}",
+      "headers": {
+        "Server": "Cowboy",
+        "Date": "Thu, 23 Aug 2018 08:27:54 GMT",
+        "Connection": "keep-alive",
+        "X-Frame-Options": "SAMEORIGIN",
+        "X-Xss-Protection": "1; mode=block",
+        "X-Content-Type-Options": "nosniff",
+        "Content-Type": "application/json; charset=utf-8",
+        "Etag": "W/\"a77ca2264e9105d5131d2fbab226d5d5\"",
+        "Cache-Control": "max-age=0, private, must-revalidate",
+        "X-Request-Id": "f65ddcf2-71f7-438f-bb06-09b557bf3ed2",
+        "X-Runtime": "0.750619",
+        "Vary": "Accept-Encoding",
+        "Strict-Transport-Security": "max-age=31536000",
+        "Transfer-Encoding": "chunked",
+        "Via": "1.1 vegur"
+      },
+      "status_code": 201,
+      "type": "ok"
+    }
+  }
+]

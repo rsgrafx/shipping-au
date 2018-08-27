@@ -4,10 +4,11 @@ defmodule Sendle.Schemas.CampaignParticipant do
 
   @type t :: %__MODULE__{}
 
-  alias Sendle.Schemas.{CampaignRollout, CampaignProduct}
+  alias Sendle.Schemas.{CampaignRollout, CampaignProduct, SendleResponse}
 
   schema "campaign_participants" do
     belongs_to(:campaign_rollout, CampaignRollout)
+    has_many(:sendle_responses, SendleResponse)
     has_many(:products, CampaignProduct)
     field(:campaign_id, :integer)
     field(:influencer_id, :integer)

@@ -1,6 +1,14 @@
 defmodule Sendle.HTTP.ClientTest do
   use Sendle.HTTPClientCase
 
+  setup do
+    Application.put_env(:sendle, :api_credentials, %{
+      api_endpoint: "http://localhost:8383",
+      sendle_auth_id: System.get_env("TEST_SENDLE_ID"),
+      sendle_api_key: System.get_env("TEST_SENDLE_API_KEY")
+    })
+  end
+
   describe "PING Client.get/3" do
     test "/api/ping returns 200 Ok", %{bypass: bypass} do
       Bypass.expect(bypass, "GET", "/api/ping", fn conn ->
