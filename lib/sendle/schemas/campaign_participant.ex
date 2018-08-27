@@ -12,14 +12,14 @@ defmodule Sendle.Schemas.CampaignParticipant do
     has_many(:products, CampaignProduct)
     field(:campaign_id, :integer)
     field(:influencer_id, :integer)
-    field(:full_name, :string, default: false)
-    field(:email, :string, default: false)
-    field(:address_line1, :string, default: false)
-    field(:address_line2, :string, default: false)
-    field(:city, :string, default: false)
+    field(:full_name, :string)
+    field(:email, :string)
+    field(:address_line1, :string)
+    field(:address_line2, :string)
+    field(:city, :string)
     field(:state_name, :string)
-    field(:country, :string, default: false)
-    field(:postcode, :string, default: false)
+    field(:country, :string)
+    field(:postcode, :string)
     field(:note, :string)
     field(:size, :float)
     field(:weight, :float)
@@ -53,18 +53,22 @@ defmodule Sendle.Schemas.CampaignParticipant do
   def build(params) do
     addr = params.address
 
-    %__MODULE__{
+    attrs = %{
+      influencer_id: params.influencer_id,
       address_line1: addr.address_line1,
       address_line2: addr.address_line2,
       city: addr.city,
       country: addr.country,
       postcode: addr.postcode,
       state_name: addr.state_name,
-      campaign_id: params.campaign_id,
+      campaign_id: params.campaign.campaign_id,
       email: params.email,
       full_name: params.full_name,
       shipping_instructions: params.note_for_shipper
     }
+
+    params.campaign
+    |> Ecto.build_assoc(:participants, attrs)
   end
 
   defp allowed do

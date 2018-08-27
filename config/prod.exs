@@ -7,11 +7,11 @@ config :sendle,
     sendle_api_key: System.get_env("SENDLE_API_KEY")
   }
 
-
 port =
   case System.get_env("PORT") do
     port when is_binary(port) -> String.to_integer(port)
-    nil -> 80 # default port
+    # default port
+    nil -> 80
   end
 
 config :sendle, http_port: port
