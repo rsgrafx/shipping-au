@@ -55,12 +55,14 @@ defmodule Sendle.Campaigns.Participant do
 
     struct(__MODULE__,
       full_name: address.full_name,
-      email: address[:email] || "",
+      email: data.email,
+      influencer_id: data.influencer_id,
       address: build_address(address),
       note_for_shipper: address[:note] || "",
       shipping_size: nil,
       shipping_weight: nil,
-      quantity: nil
+      quantity: nil,
+      products: data.products
     )
   end
 

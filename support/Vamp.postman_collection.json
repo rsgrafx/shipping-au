@@ -1,0 +1,92 @@
+{
+	"id": "a9cc8e10-41f5-46df-8736-a114cd6a7a6f",
+	"name": "Vamp",
+	"description": "",
+	"auth": null,
+	"events": null,
+	"variables": [],
+	"order": [
+		"990f4bb2-1b80-4c3f-ab4c-363a4f34408e",
+		"2e3550c2-1205-4595-8008-e3ff3b5388d4",
+		"a65aa966-0a80-4c48-b87d-55cb6f63bcf2"
+	],
+	"folders_order": [],
+	"folders": [],
+	"requests": [
+		{
+			"id": "2e3550c2-1205-4595-8008-e3ff3b5388d4",
+			"name": "Post Build Shipping Campaign",
+			"url": "{{endpoint}}/sendle/campaigns",
+			"description": "",
+			"data": [],
+			"dataMode": "raw",
+			"headerData": [
+				{
+					"key": "Content-Type",
+					"value": "application/json",
+					"description": "",
+					"enabled": true
+				},
+				{
+					"key": "Accept",
+					"value": "application/json",
+					"description": "",
+					"enabled": true
+				}
+			],
+			"method": "POST",
+			"pathVariableData": [],
+			"queryParams": [],
+			"auth": null,
+			"events": [],
+			"folder": null,
+			"rawModeData": "{\n\t\"data\": {\n\t\t\"campaign_id\": 100,\n\t\t\"campaign_name\": \"Lulumon Leggings Campaign Fall 2018\",\n\t\t\"notes\" : \"Missing some small tags\",\n\t\t\"participants\": [{\n\t\t\t\t\"influencer_id\": 1001,\n\t\t\t\t\"email\": \"participant1@vamp.com\",\n\t\t\t\t\"address\": {\n\t\t\t\t\t\"full_name\": \"Ms. Jane Doe\",\n\t\t\t\t\t\"address_line_1\": \"Level 1\",\n\t\t\t\t\t\"address_line_2\": \"17 Jones St\",\n\t\t\t\t\t\"city\": \"North Sydney\",\n\t\t\t\t\t\"state\": \"NSW\",\n\t\t\t\t\t\"country\": \"Australia\",\n\t\t\t\t\t\"postcode\": \"2060\"\n\t\t\t\t},\n\t\t\t\t\"products\": [{\n\t\t\t\t\t\t\"campaign_product_id\": 101,\n\t\t\t\t\t\t\"quantity\": 2,\n\t\t\t\t\t\t\"size\": \"12\"\n\t\t\t\t\t},\n\t\t\t\t\t{\n\t\t\t\t\t\t\"campaign_product_id\": 102,\n\t\t\t\t\t\t\"quantity\": 1,\n\t\t\t\t\t\t\"size\": \"3\"\n\t\t\t\t\t}\n\t\t\t\t]\n\t\t\t},\n\t\t\t{\n\t\t\t\t\"influencer_id\": 1021,\n\t\t\t\t\"email\": \"participant2@vamp.com\",\n\t\t\t\t\"address\": {\n\t\t\t\t\t\"full_name\": \"Ms. Satya Ramaputti\",\n\t\t\t\t\t\"address_line_1\": \"602 N May Mesa\",\n\t\t\t\t\t\"address_line_2\": \"Apt 82\",\n\t\t\t\t\t\"city\": \"Mesa\",\n\t\t\t\t\t\"state\": \"Arizona\",\n\t\t\t\t\t\"country\": \"USA\",\n\t\t\t\t\t\"postcode\": \"85201\"\n\t\t\t\t},\n\t\t\t\t\"products\": [{\n\t\t\t\t\t\"campaign_product_id\": 101,\n\t\t\t\t\t\"quantity\": 2,\n\t\t\t\t\t\"size\": \"12\"\n\t\t\t\t}]\n\t\t\t},\n\t\t\t{\n\t\t\t\t\"influencer_id\": 3024,\n\t\t\t\t\"email\": \"participant3@vamp.com\",\n\t\t\t\t\"address\": {\n\t\t\t\t\t\"full_name\": \"Losena Faluvau\",\n\t\t\t\t\t\"address_line_1\": \"Northern Press rd\",\n\t\t\t\t\t\"address_line_2\": \"Lot 11.\",\n\t\t\t\t\t\"city\": \"Nadi Town\",\n\t\t\t\t\t\"state\": \"\",\n\t\t\t\t\t\"country\": \"Fiji Islands\",\n\t\t\t\t\t\"postcode\": \"\"\n\t\t\t\t},\n\t\t\t\t\"products\": [{\n\t\t\t\t\t\"campaign_product_id\": 101,\n\t\t\t\t\t\"quantity\": 2,\n\t\t\t\t\t\"size\": \"4\"\n\t\t\t\t}]\n\t\t\t},\n\t\t\t{\n\t\t\t\t\"influencer_id\": 3024,\n\t\t\t\t\"email\": \"participant4@vamp.com\",\n\t\t\t\t\"address\": {\n\t\t\t\t\t\"full_name\": \"Mark Jamal\",\n\t\t\t\t\t\"address_line_1\": \"10 Eunos Road 8\",\n\t\t\t\t\t\"address_line_2\": \"\",\n\t\t\t\t\t\"city\": \"Singapore\",\n\t\t\t\t\t\"state\": \"\",\n\t\t\t\t\t\"country\": \"Republic of Singapore\",\n\t\t\t\t\t\"postcode\": \"408600\"\n\t\t\t\t},\n\t\t\t\t\"products\": [{\n\t\t\t\t\t\"campaign_product_id\": 101,\n\t\t\t\t\t\"quantity\": 2,\n\t\t\t\t\t\"size\": \"XL\"\n\t\t\t\t}]\n\t\t\t}\n\t\t],\n\t\t\"products\": [{\n\t\t\t\t\"campaign_product_id\": 100,\n\t\t\t\t\"name\": \"Metal Vent Tech Short Sleeve\",\n\t\t\t\t\"sku\": \"2034334\"\n\t\t\t},\n\t\t\t{\n\t\t\t\t\"campaign_product_id\": 101,\n\t\t\t\t\"name\": \"Align Pant Full Length 28\",\n\t\t\t\t\"sku\": \"3819211\"\n\t\t\t},\n\t\t\t{\n\t\t\t\t\"campaign_product_id\": 102,\n\t\t\t\t\"name\": \"Crafted Movement Bra - Girls\",\n\t\t\t\t\"sku\": \"3819008\"\n\t\t\t}\n\t\t]\n\t}\n}",
+			"headers": "Content-Type: application/json\nAccept: application/json\n",
+			"pathVariables": {}
+		},
+		{
+			"id": "990f4bb2-1b80-4c3f-ab4c-363a4f34408e",
+			"name": "Ping Server",
+			"url": "{{endpoint}}/ping",
+			"description": "Ping Server",
+			"data": [],
+			"dataMode": "raw",
+			"headerData": [
+				{
+					"key": "Content-Type",
+					"value": "application/json"
+				},
+				{
+					"key": "Authorization",
+					"value": "Bearer: eyJhbGciOiJIUzUxMiIsInR5cCI6IkpXVCJ9.eyJhdWQiOiJVc2VyOjMiLCJleHAiOjE0OTI2MjcyOTUsImlhdCI6MTQ5MjYyMDA5NSwiaXNzIjoiU21hcnRSZW50IiwianRpIjoiODVkOTgwZWUtM2VhZS00OTA1LWIzMWQtM2ZkNWY0YTdhZTU0IiwicGVtIjp7fSwic3ViIjoiVXNlcjozIiwidHlwIjoiYWNjZXNzIn0.fomwR-3UR_K_jVthZ3_rD0xDp_cXxP-pcherTlO-HHBaGK9SLqSmH4eX6RmmIDbv_XOucIj-W6EeYqLch20wBw"
+				}
+			],
+			"method": "GET",
+			"pathVariableData": [],
+			"queryParams": [],
+			"auth": null,
+			"events": null,
+			"folder": null,
+			"rawModeData": "",
+			"headers": "Content-Type: application/json\nAuthorization: Bearer: eyJhbGciOiJIUzUxMiIsInR5cCI6IkpXVCJ9.eyJhdWQiOiJVc2VyOjMiLCJleHAiOjE0OTI2MjcyOTUsImlhdCI6MTQ5MjYyMDA5NSwiaXNzIjoiU21hcnRSZW50IiwianRpIjoiODVkOTgwZWUtM2VhZS00OTA1LWIzMWQtM2ZkNWY0YTdhZTU0IiwicGVtIjp7fSwic3ViIjoiVXNlcjozIiwidHlwIjoiYWNjZXNzIn0.fomwR-3UR_K_jVthZ3_rD0xDp_cXxP-pcherTlO-HHBaGK9SLqSmH4eX6RmmIDbv_XOucIj-W6EeYqLch20wBw\n",
+			"pathVariables": {}
+		},
+		{
+			"id": "a65aa966-0a80-4c48-b87d-55cb6f63bcf2",
+			"name": "Request Campaign",
+			"url": "",
+			"description": "Fetch Campaign with Picking List.",
+			"data": null,
+			"dataMode": "params",
+			"headerData": [],
+			"method": "GET",
+			"pathVariableData": [],
+			"queryParams": [],
+			"auth": null,
+			"events": [],
+			"folder": null,
+			"headers": "",
+			"pathVariables": {}
+		}
+	]
+}

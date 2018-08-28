@@ -3,6 +3,7 @@ defmodule Sendle.Schemas.CampaignProduct do
     Tied to a database table that will store - products being shipped to an Influencer.
   """
   use Ecto.Schema
+  import Ecto.Changeset
 
   alias Sendle.Schemas.CampaignRollout
 
@@ -14,5 +15,11 @@ defmodule Sendle.Schemas.CampaignProduct do
     field(:product_name, :string)
     field(:description, :string)
     field(:sku, :string)
+  end
+
+  def changeset(struct, params) do
+    struct
+    |> cast(params, [:campaign_product_id, :product_name, :description, :sku])
+    |> validate_required([:product_name])
   end
 end

@@ -10,6 +10,7 @@ defmodule Sendle.Campaigns do
 
   alias Sendle.Schemas.{
     CampaignRollout,
+    CampaignProduct,
     CampaignParticipant,
     ProductParticipant,
     SendleResponse
@@ -34,7 +35,10 @@ defmodule Sendle.Campaigns do
   end
 
   def create(%{data: data} = payload) when is_map(payload) do
-    Campaign.new(data)
+    campaign =
+      Campaign.new(data)
+
+    save(campaign)
   end
 
   defp atomize(%{"data" => _} = data) do
@@ -60,19 +64,60 @@ defmodule Sendle.Campaigns do
       |> CampaignRollout.changeset()
       |> Sendle.Repo.insert!()
 
+    saved_products = Enum.map(campaign.products, &build_product(campaign_rollout, &1))
+
     participants =
       Enum.map(
         campaign.participants,
-        &build_participant(Map.merge(&1, %{campaign_id: campaign_rollout.id}))
+        fn influencer ->
+          data =
+            Map.merge(influencer, %{
+              campaign: campaign_rollout,
+              campaign_id: campaign_rollout.campaign_id
+            })
+
+          participant = build_participant(data)
+          build_participant_product(participant, influencer.products, saved_products)
+        end
       )
 
-    %{campaign: campaign_rollout, participants: participants}
+    %{
+      campaign: campaign_rollout,
+      participants: participants,
+      products: saved_products
+    }
+  end
+
+  defp build_product(campaign, product) do
+    data =
+      product
+      |> Map.merge(%{product_name: product.name})
+      |> Map.from_struct()
+
+    campaign
+      |> Ecto.build_assoc(:products, data)
+      |> CampaignProduct.changeset(data)
+      |> Repo.insert!()
+  end
+
+  defp build_participant_product(participant, assigned_products, products) do
+    Enum.map(assigned_products, fn assigned ->
+      if (assigned.campaign_product_id in Enum.map(products, & &1.campaign_product_id)) do
+        _ =
+          Repo.insert!(%ProductParticipant{
+            campaign_participant_id: participant.id,
+            campaign_product_id: assigned.campaign_product_id,
+            campaign_rollout_id: participant.campaign_rollout_id
+          })
+      end
+    end)
   end
 
   defp build_participant(params) do
     params
     |> CampaignParticipant.build()
     |> CampaignParticipant.changeset()
+    |> Repo.insert!()
   end
 
   @doc """
