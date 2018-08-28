@@ -34,19 +34,20 @@ defmodule Sendle.CampaignsTest do
         country: "Australia"
       }
 
-      assert %Campaign{
-               campaign_id: 100,
-               participants: participants,
-               products: products,
-               sender: %{
-                 contact: ^sender_contact,
-                 address: ^sender_address,
-                 instructions: "No instructions supplied by receiver"
-               }
-             } = Campaigns.create(payload)
+      assert {:ok,
+              %Campaign{
+                campaign_id: 100,
+                participants: participants,
+                products: products,
+                sender: %{
+                  contact: ^sender_contact,
+                  address: ^sender_address,
+                  instructions: "No instructions supplied by receiver"
+                }
+              }} = Campaigns.create(payload)
 
       assert %Participant{
-               email: "",
+               email: _,
                address: %Address{
                  city: "North Sydney",
                  postcode: "2060",
@@ -83,7 +84,6 @@ defmodule Sendle.CampaignsTest do
       # A Vamp team member should be able to access PickingList.
       payload
       |> Campaigns.create()
-      |> Campaigns.save()
 
       assert [campaign] =
                CampaignRollout

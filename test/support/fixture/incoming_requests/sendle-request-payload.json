@@ -5,6 +5,7 @@
 		"notes" : "Missing some small tags",
 		"participants": [{
 				"influencer_id": 1001,
+				"email": "vampme1@gmail.com",
 				"address": {
 					"full_name": "Ms. Jane Doe",
 					"address_line_1": "Level 1",
@@ -28,6 +29,7 @@
 			},
 			{
 				"influencer_id": 1021,
+				"email": "vampme2@gmail.com",
 				"address": {
 					"full_name": "Ms. Satya Ramaputti",
 					"address_line_1": "602 N May Mesa",
@@ -45,6 +47,7 @@
 			},
 			{
 				"influencer_id": 3024,
+				"email": "vampme3@gmail.com",
 				"address": {
 					"full_name": "Losena Faluvau",
 					"address_line_1": "Northern Press rd",
@@ -52,7 +55,7 @@
 					"city": "Nadi Town",
 					"state": "",
 					"country": "Fiji Islands",
-					"postcode": ""
+					"postcode": "0000"
 				},
 				"products": [{
 					"campaign_product_id": 101,
@@ -62,6 +65,7 @@
 			},
 			{
 				"influencer_id": 3024,
+				"email": "vampme4@gmail.com",
 				"address": {
 					"full_name": "Mark Jamal",
 					"address_line_1": "10 Eunos Road 8",

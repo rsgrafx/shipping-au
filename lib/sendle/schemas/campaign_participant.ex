@@ -25,6 +25,7 @@ defmodule Sendle.Schemas.CampaignParticipant do
     field(:weight, :float)
     field(:quantity, :integer)
     field(:shipping_instructions, :string)
+    timestamps()
   end
 
   @spec changeset(
@@ -72,6 +73,11 @@ defmodule Sendle.Schemas.CampaignParticipant do
   end
 
   defp allowed do
-    __MODULE__.__schema__(:fields) -- [:id]
+    __MODULE__.__schema__(:fields) --
+      [
+        :id,
+        :inserted_at,
+        :updated_at
+      ]
   end
 end

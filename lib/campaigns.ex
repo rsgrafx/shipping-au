@@ -25,7 +25,7 @@ defmodule Sendle.Campaigns do
   @doc """
     Entry Point for system.
   """
-  @spec create(payload :: map()) :: campaign
+  @spec create(payload :: map()) :: {:ok, campaign}
   def create(%{"data" => _data} = data) do
     with {:ok, payload} <- atomize(data) do
       create(payload)
@@ -35,8 +35,7 @@ defmodule Sendle.Campaigns do
   end
 
   def create(%{data: data} = payload) when is_map(payload) do
-    campaign =
-      Campaign.new(data)
+    campaign = Campaign.new(data)
 
     save(campaign)
   end
@@ -58,12 +57,7 @@ defmodule Sendle.Campaigns do
   """
   @spec save(campaign :: Campaign.t()) :: map()
   def save(campaign) do
-    campaign_rollout =
-      campaign
-      |> CampaignRollout.build()
-      |> CampaignRollout.changeset()
-      |> Sendle.Repo.insert!()
-
+    campaign_rollout = insert_campaign_rollout(campaign)
     saved_products = Enum.map(campaign.products, &build_product(campaign_rollout, &1))
 
     participants =
@@ -76,16 +70,20 @@ defmodule Sendle.Campaigns do
               campaign_id: campaign_rollout.campaign_id
             })
 
-          participant = build_participant(data)
-          build_participant_product(participant, influencer.products, saved_products)
+          data
+          |> build_participant()
+          |> build_participant_product(influencer.products, saved_products)
         end
       )
 
-    %{
-      campaign: campaign_rollout,
-      participants: participants,
-      products: saved_products
-    }
+    {:ok, campaign}
+  end
+
+  defp insert_campaign_rollout(campaign) do
+    campaign
+    |> CampaignRollout.build()
+    |> CampaignRollout.changeset()
+    |> Sendle.Repo.insert!()
   end
 
   defp build_product(campaign, product) do
@@ -95,18 +93,21 @@ defmodule Sendle.Campaigns do
       |> Map.from_struct()
 
     campaign
-      |> Ecto.build_assoc(:products, data)
-      |> CampaignProduct.changeset(data)
-      |> Repo.insert!()
+    |> Ecto.build_assoc(:products, data)
+    |> CampaignProduct.changeset(data)
+    |> Repo.insert!()
   end
 
   defp build_participant_product(participant, assigned_products, products) do
     Enum.map(assigned_products, fn assigned ->
-      if (assigned.campaign_product_id in Enum.map(products, & &1.campaign_product_id)) do
-        _ =
+      case Enum.filter(products, &(&1.campaign_product_id == assigned.campaign_product_id)) do
+        [] ->
+          :noop
+
+        [product] ->
           Repo.insert!(%ProductParticipant{
             campaign_participant_id: participant.id,
-            campaign_product_id: assigned.campaign_product_id,
+            campaign_product_id: product.id,
             campaign_rollout_id: participant.campaign_rollout_id
           })
       end
@@ -141,9 +142,17 @@ defmodule Sendle.Campaigns do
   end
 
   def do_get_campaign(campaign_id: id) do
-    CampaignRollout
-    |> Repo.get_by(campaign_id: id)
-    |> preload()
+    query =
+      from(cr in CampaignRollout,
+        where: cr.campaign_id == ^id,
+        order_by: [desc: cr.inserted_at],
+        limit: 1
+      )
+
+    case Repo.all(query) do
+      [] -> nil
+      [campaign] -> preload(campaign)
+    end
   end
 
   defp preload(campaign) do
