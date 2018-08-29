@@ -15,6 +15,7 @@ defmodule Sendle.Schemas.CampaignProduct do
     field(:product_name, :string)
     field(:description, :string)
     field(:sku, :string)
+    timestamps()
   end
 
   def changeset(struct, params) do

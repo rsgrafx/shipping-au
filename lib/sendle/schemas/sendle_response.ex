@@ -13,6 +13,7 @@ defmodule Sendle.Schemas.SendleResponse do
     field(:order_url, :string)
     field(:state, :string)
     field(:scheduling, :map)
+    timestamps()
   end
 
   @allowed ~w(order_id price route sendle_reference tracking_url order_url state scheduling)a

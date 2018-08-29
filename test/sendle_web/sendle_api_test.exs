@@ -21,11 +21,11 @@ defmodule SendleWeb.ApiTest do
         |> put_req_header("content-type", "application/json")
         |> post("/sendle/campaigns", payload)
 
-      assert result = json_response(result, 200)
+      assert result = json_response(result, 201)
 
       assert %{
                "data" => %{"status" => "accepted"}
-             } = Poison.decode!(result)
+             } = result
     end
 
     test "Endpoint should return error code payload malformed"

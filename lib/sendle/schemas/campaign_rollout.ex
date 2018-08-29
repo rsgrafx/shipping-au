@@ -12,6 +12,7 @@ defmodule Sendle.Schemas.CampaignRollout do
     field(:campaign_id, :integer)
     field(:instructions, :string)
     field(:meta, :map)
+    timestamps()
   end
 
   @allowed [:name, :campaign_id, :instructions, :meta]
