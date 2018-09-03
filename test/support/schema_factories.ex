@@ -24,17 +24,18 @@ defmodule Sendle.SchemaFactory do
   end
 
   def campaign_participant_factory do
+    address = Enum.random(["50", "44", "66", "58-68", "70", "90"]) <> " King Street"
     %CampaignParticipant{
-      campaign_id: 12,
+      campaign_id: nil,
       influencer_id: :rand.uniform(1_000_100) + sequence(:influencer_id, fn n -> n end),
       full_name: Faker.Name.name(),
       email: Faker.Internet.email(),
-      address_line1: "12 Foo Bar st",
-      address_line2: "Lot 11",
-      city: "Cabbage Tree",
-      state_name: "VIC",
+      address_line1: address,
+      address_line2: nil,
+      city: "Sydney",
+      state_name: "NSW",
       country: "Australia",
-      postcode: "3364",
+      postcode: "2000",
       note: nil,
       size: 2.3,
       weight: nil,
