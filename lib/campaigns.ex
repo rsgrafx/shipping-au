@@ -156,7 +156,13 @@ defmodule Sendle.Campaigns do
   end
 
   defp preload(campaign) do
-    Repo.preload(campaign, [:products, participants: [products: load_products(campaign.id)]])
+    Repo.preload(campaign, [
+      :products,
+      participants: [
+        :sendle_responses,
+        [products: load_products(campaign.id)]
+      ]
+    ])
   end
 
   @spec process_orders(
@@ -197,7 +203,12 @@ defmodule Sendle.Campaigns do
         {order, task} ->
           %{body: body} = result = Map.take(wait_and_return(task), [:body, :status])
 
-          body = Map.merge(%{"influencer_id" => order.influencer_id}, body)
+          body =
+            if is_nil(body) do
+              Map.merge(%{"influencer_id" => order.influencer_id}, %{"error" => "Nil response from API"})
+            else
+              Map.merge(%{"influencer_id" => order.influencer_id}, body)
+            end
 
           if result.status == 201 do
             save_response(order.influencer_id, order.campaign_id, body)
