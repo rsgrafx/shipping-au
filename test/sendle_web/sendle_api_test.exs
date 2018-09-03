@@ -166,19 +166,6 @@ defmodule SendleWeb.ApiTest do
         for package_data <- packing_slips do
           %{"influencer_id" => in_id} = package_data
 
-          # %{
-          #   sendle_responses: [
-          #     %{
-          #       order_id: order_id,
-          #       tracking_url: tracking_url,
-          #       order_url: order_url,
-          #       sendle_reference: reference
-          #     }
-          #   ]
-          # } =
-          #   Repo.get_by(Sendle.Schemas.CampaignParticipant, influencer_id: in_id)
-          #   |> Repo.preload(:sendle_responses)
-
           assert %{
                    "influencer_id" => ^in_id,
                    "sendle_reference" => reference,
