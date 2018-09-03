@@ -168,11 +168,11 @@ defmodule Sendle.CampaignsTest do
           pickup_date: "2018-09-24",
           receiver: %{
             address: %{
-              address_line1: "12 Foo Bar st",
+              address_line1: _address_one,
               country: "Australia",
-              postcode: "3364",
-              state_name: "VIC",
-              suburb: "Cabbage Tree"
+              postcode: "2000",
+              state_name: "NSW",
+              suburb: "Sydney"
             },
             contact: %{
               company: "",

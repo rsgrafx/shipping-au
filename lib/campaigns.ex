@@ -178,47 +178,72 @@ defmodule Sendle.Campaigns do
     {:ok, results}
   end
 
+  @bad_request %{
+    body: %{
+      error: "Was not able to process order - something went wrong processing one of the orders."
+    },
+    status: 500
+  }
   @spec send_requests(order_lists :: [map()]) :: {:ok, [map()]} | {:error, any()}
   def send_requests(order_lists) do
     results =
       Enum.map(order_lists, fn payload ->
         {payload, Task.async(fn -> CreateOrder.request(payload) end)}
       end)
-      |> Enum.map(fn {order, task} ->
-        %{body: body} = result = Map.take(Task.await(task), [:body, :status])
+      |> Enum.map(fn
+        {:error_none_found, _} ->
+          @bad_request
 
-        body = Map.merge(%{"influencer_id" => order.influencer_id}, body)
+        {order, task} ->
+          %{body: body} = result = Map.take(wait_and_return(task), [:body, :status])
 
-        if result.status == 201 do
-          _ = save_response(order.influencer_id, body)
-        end
+          body = Map.merge(%{"influencer_id" => order.influencer_id}, body)
 
-        %{result | body: body}
+          if result.status == 201 do
+            save_response(order.influencer_id, order.campaign_id, body)
+          end
+
+          %{result | body: body}
       end)
 
     {:ok, results}
   end
 
+  def wait_and_return(task) do
+    try do
+      Task.await(task)
+    catch
+      :exit, _ ->
+        IO.puts("caught exit")
+        @bad_request
+    end
+  end
+
   @doc """
   Save response to `sendle_responses` table.
   """
-  @spec save_response(integer(), map()) ::
+  @spec save_response(integer(), integer(), map()) ::
           {:ok, Ecto.Schema.t()} | {:error, :cant_find_campaign_participant}
-  def save_response(influencer_id, sendle_response) do
-    case do_get_campaign_participant(influencer_id) do
-      nil ->
-        {:error, :cant_find_campaign_participant}
-
-      participant ->
+  def save_response(influencer_id, campaign_id, sendle_response) do
+    case do_get_campaign_participant(influencer_id, campaign_id) do
+      [participant] ->
         participant
         |> Ecto.build_assoc(:sendle_responses)
         |> SendleResponse.changeset(sendle_response)
         |> Repo.insert()
+
+      _ ->
+        {:error, :cant_find_campaign_participant}
     end
   end
 
-  defp do_get_campaign_participant(influencer_id) do
-    Repo.get_by(CampaignParticipant, influencer_id: influencer_id)
+  defp do_get_campaign_participant(influencer_id, campaign_id) do
+    from(cp in CampaignParticipant,
+      where: cp.influencer_id == ^influencer_id and cp.campaign_id == ^campaign_id,
+      order_by: [desc: cp.inserted_at],
+      limit: 1
+    )
+    |> Repo.all()
   end
 
   @doc """

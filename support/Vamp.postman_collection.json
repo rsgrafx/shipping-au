@@ -8,7 +8,8 @@
 	"order": [
 		"990f4bb2-1b80-4c3f-ab4c-363a4f34408e",
 		"2e3550c2-1205-4595-8008-e3ff3b5388d4",
-		"a65aa966-0a80-4c48-b87d-55cb6f63bcf2"
+		"a65aa966-0a80-4c48-b87d-55cb6f63bcf2",
+		"a7684087-be6f-4289-9c42-1dee88a6d6e3"
 	],
 	"folders_order": [],
 	"folders": [],
@@ -40,7 +41,7 @@
 			"auth": null,
 			"events": [],
 			"folder": null,
-			"rawModeData": "{\n\t\"data\": {\n\t\t\"campaign_id\": 100,\n\t\t\"campaign_name\": \"Lulumon Leggings Campaign Fall 2018\",\n\t\t\"notes\" : \"Missing some small tags\",\n\t\t\"participants\": [{\n\t\t\t\t\"influencer_id\": 1001,\n\t\t\t\t\"email\": \"participant1@vamp.com\",\n\t\t\t\t\"address\": {\n\t\t\t\t\t\"full_name\": \"Ms. Jane Doe\",\n\t\t\t\t\t\"address_line_1\": \"Level 1\",\n\t\t\t\t\t\"address_line_2\": \"17 Jones St\",\n\t\t\t\t\t\"city\": \"North Sydney\",\n\t\t\t\t\t\"state\": \"NSW\",\n\t\t\t\t\t\"country\": \"Australia\",\n\t\t\t\t\t\"postcode\": \"2060\"\n\t\t\t\t},\n\t\t\t\t\"products\": [{\n\t\t\t\t\t\t\"campaign_product_id\": 101,\n\t\t\t\t\t\t\"quantity\": 2,\n\t\t\t\t\t\t\"size\": \"12\"\n\t\t\t\t\t},\n\t\t\t\t\t{\n\t\t\t\t\t\t\"campaign_product_id\": 102,\n\t\t\t\t\t\t\"quantity\": 1,\n\t\t\t\t\t\t\"size\": \"3\"\n\t\t\t\t\t}\n\t\t\t\t]\n\t\t\t},\n\t\t\t{\n\t\t\t\t\"influencer_id\": 1021,\n\t\t\t\t\"email\": \"participant2@vamp.com\",\n\t\t\t\t\"address\": {\n\t\t\t\t\t\"full_name\": \"Ms. Satya Ramaputti\",\n\t\t\t\t\t\"address_line_1\": \"602 N May Mesa\",\n\t\t\t\t\t\"address_line_2\": \"Apt 82\",\n\t\t\t\t\t\"city\": \"Mesa\",\n\t\t\t\t\t\"state\": \"Arizona\",\n\t\t\t\t\t\"country\": \"USA\",\n\t\t\t\t\t\"postcode\": \"85201\"\n\t\t\t\t},\n\t\t\t\t\"products\": [{\n\t\t\t\t\t\"campaign_product_id\": 101,\n\t\t\t\t\t\"quantity\": 2,\n\t\t\t\t\t\"size\": \"12\"\n\t\t\t\t}]\n\t\t\t},\n\t\t\t{\n\t\t\t\t\"influencer_id\": 3024,\n\t\t\t\t\"email\": \"participant3@vamp.com\",\n\t\t\t\t\"address\": {\n\t\t\t\t\t\"full_name\": \"Losena Faluvau\",\n\t\t\t\t\t\"address_line_1\": \"Northern Press rd\",\n\t\t\t\t\t\"address_line_2\": \"Lot 11.\",\n\t\t\t\t\t\"city\": \"Nadi Town\",\n\t\t\t\t\t\"state\": \"\",\n\t\t\t\t\t\"country\": \"Fiji Islands\",\n\t\t\t\t\t\"postcode\": \"\"\n\t\t\t\t},\n\t\t\t\t\"products\": [{\n\t\t\t\t\t\"campaign_product_id\": 101,\n\t\t\t\t\t\"quantity\": 2,\n\t\t\t\t\t\"size\": \"4\"\n\t\t\t\t}]\n\t\t\t},\n\t\t\t{\n\t\t\t\t\"influencer_id\": 3024,\n\t\t\t\t\"email\": \"participant4@vamp.com\",\n\t\t\t\t\"address\": {\n\t\t\t\t\t\"full_name\": \"Mark Jamal\",\n\t\t\t\t\t\"address_line_1\": \"10 Eunos Road 8\",\n\t\t\t\t\t\"address_line_2\": \"\",\n\t\t\t\t\t\"city\": \"Singapore\",\n\t\t\t\t\t\"state\": \"\",\n\t\t\t\t\t\"country\": \"Republic of Singapore\",\n\t\t\t\t\t\"postcode\": \"408600\"\n\t\t\t\t},\n\t\t\t\t\"products\": [{\n\t\t\t\t\t\"campaign_product_id\": 101,\n\t\t\t\t\t\"quantity\": 2,\n\t\t\t\t\t\"size\": \"XL\"\n\t\t\t\t}]\n\t\t\t}\n\t\t],\n\t\t\"products\": [{\n\t\t\t\t\"campaign_product_id\": 100,\n\t\t\t\t\"name\": \"Metal Vent Tech Short Sleeve\",\n\t\t\t\t\"sku\": \"2034334\"\n\t\t\t},\n\t\t\t{\n\t\t\t\t\"campaign_product_id\": 101,\n\t\t\t\t\"name\": \"Align Pant Full Length 28\",\n\t\t\t\t\"sku\": \"3819211\"\n\t\t\t},\n\t\t\t{\n\t\t\t\t\"campaign_product_id\": 102,\n\t\t\t\t\"name\": \"Crafted Movement Bra - Girls\",\n\t\t\t\t\"sku\": \"3819008\"\n\t\t\t}\n\t\t]\n\t}\n}",
+			"rawModeData": "{\n\t\"data\": {\n\t\t\"campaign_id\": 132,\n\t\t\"campaign_name\": \"Lulumon Leggings Campaign Fall 2018\",\n\t\t\"notes\" : \"Missing some small tags\",\n\t\t\"participants\": [{\n\t\t\t\t\"influencer_id\": 1001,\n\t\t\t\t\"email\": \"participant1@vamp.com\",\n\t\t\t\t\"address\": {\n\t\t\t\t\t\"full_name\": \"Ms. Jane Doe\",\n\t\t\t\t\t\"address_line_1\": \"Level 1\",\n\t\t\t\t\t\"address_line_2\": \"17 Jones St\",\n\t\t\t\t\t\"city\": \"North Sydney\",\n\t\t\t\t\t\"state\": \"NSW\",\n\t\t\t\t\t\"country\": \"Australia\",\n\t\t\t\t\t\"postcode\": \"2060\"\n\t\t\t\t},\n\t\t\t\t\"products\": [{\n\t\t\t\t\t\t\"campaign_product_id\": 101,\n\t\t\t\t\t\t\"quantity\": 2,\n\t\t\t\t\t\t\"size\": \"12\"\n\t\t\t\t\t},\n\t\t\t\t\t{\n\t\t\t\t\t\t\"campaign_product_id\": 102,\n\t\t\t\t\t\t\"quantity\": 1,\n\t\t\t\t\t\t\"size\": \"3\"\n\t\t\t\t\t}\n\t\t\t\t]\n\t\t\t},\n\t\t\t{\n\t\t\t\t\"influencer_id\": 1002,\n\t\t\t\t\"email\": \"participant2@vamp.com\",\n\t\t\t\t\"address\": {\n\t\t\t\t\t\"full_name\": \"Ms. Satya Ramaputti\",\n\t\t\t\t\t\"address_line_1\": \"602 N May Mesa\",\n\t\t\t\t\t\"address_line_2\": \"Apt 82\",\n\t\t\t\t\t\"city\": \"Mesa\",\n\t\t\t\t\t\"state\": \"Arizona\",\n\t\t\t\t\t\"country\": \"USA\",\n\t\t\t\t\t\"postcode\": \"85201\"\n\t\t\t\t},\n\t\t\t\t\"products\": [{\n\t\t\t\t\t\"campaign_product_id\": 101,\n\t\t\t\t\t\"quantity\": 2,\n\t\t\t\t\t\"size\": \"12\"\n\t\t\t\t}]\n\t\t\t},\n\t\t\t{\n\t\t\t\t\"influencer_id\": 1003,\n\t\t\t\t\"email\": \"participant3@vamp.com\",\n\t\t\t\t\"address\": {\n\t\t\t\t\t\"full_name\": \"Losena Faluvau\",\n\t\t\t\t\t\"address_line_1\": \"Northern Press rd\",\n\t\t\t\t\t\"address_line_2\": \"Lot 11.\",\n\t\t\t\t\t\"city\": \"Nadi Town\",\n\t\t\t\t\t\"state\": \"\",\n\t\t\t\t\t\"country\": \"Fiji Islands\",\n\t\t\t\t\t\"postcode\": \"100220\"\n\t\t\t\t},\n\t\t\t\t\"products\": [{\n\t\t\t\t\t\"campaign_product_id\": 101,\n\t\t\t\t\t\"quantity\": 2,\n\t\t\t\t\t\"size\": \"4\"\n\t\t\t\t}]\n\t\t\t},\n\t\t\t{\n\t\t\t\t\"influencer_id\": 1004,\n\t\t\t\t\"email\": \"participant4@vamp.com\",\n\t\t\t\t\"address\": {\n\t\t\t\t\t\"full_name\": \"Mark Jamal\",\n\t\t\t\t\t\"address_line_1\": \"10 Eunos Road 8\",\n\t\t\t\t\t\"address_line_2\": \"\",\n\t\t\t\t\t\"city\": \"Singapore\",\n\t\t\t\t\t\"state\": \"\",\n\t\t\t\t\t\"country\": \"Republic of Singapore\",\n\t\t\t\t\t\"postcode\": \"408600\"\n\t\t\t\t},\n\t\t\t\t\"products\": [{\n\t\t\t\t\t\"campaign_product_id\": 101,\n\t\t\t\t\t\"quantity\": 2,\n\t\t\t\t\t\"size\": \"XL\"\n\t\t\t\t}]\n\t\t\t}\n\t\t],\n\t\t\"products\": [{\n\t\t\t\t\"campaign_product_id\": 100,\n\t\t\t\t\"name\": \"Metal Vent Tech Short Sleeve\",\n\t\t\t\t\"sku\": \"2034334\"\n\t\t\t},\n\t\t\t{\n\t\t\t\t\"campaign_product_id\": 101,\n\t\t\t\t\"name\": \"Align Pant Full Length 28\",\n\t\t\t\t\"sku\": \"3819211\"\n\t\t\t},\n\t\t\t{\n\t\t\t\t\"campaign_product_id\": 102,\n\t\t\t\t\"name\": \"Crafted Movement Bra - Girls\",\n\t\t\t\t\"sku\": \"3819008\"\n\t\t\t}\n\t\t]\n\t}\n}",
 			"headers": "Content-Type: application/json\nAccept: application/json\n",
 			"pathVariables": {}
 		},
@@ -74,7 +75,7 @@
 		{
 			"id": "a65aa966-0a80-4c48-b87d-55cb6f63bcf2",
 			"name": "Request Campaign",
-			"url": "",
+			"url": "{{endpoint}}/sendle/campaigns/132",
 			"description": "Fetch Campaign with Picking List.",
 			"data": null,
 			"dataMode": "params",
@@ -86,6 +87,111 @@
 			"events": [],
 			"folder": null,
 			"headers": "",
+			"pathVariables": {}
+		},
+		{
+			"id": "a7684087-be6f-4289-9c42-1dee88a6d6e3",
+			"name": "Submit Sizes and Details to finalize/",
+			"url": "{{endpoint}}/sendle/campaigns/132/process",
+			"description": "This will generate data and submit payload to Sendle.",
+			"data": [],
+			"dataMode": "raw",
+			"headerData": [
+				{
+					"key": "Content-Type",
+					"value": "application/json",
+					"description": "",
+					"enabled": true
+				},
+				{
+					"key": "Accept",
+					"value": "application/json",
+					"description": "",
+					"enabled": true
+				}
+			],
+			"method": "PUT",
+			"pathVariableData": [],
+			"queryParams": [],
+			"auth": null,
+			"events": [],
+			"folder": null,
+			"responses": [
+				{
+					"id": "52833e68-9ebd-445d-bc02-29bc66fa0b06",
+					"name": "Submit Sizes and Details to finalize - Error Responses",
+					"status": "",
+					"mime": "",
+					"language": "json",
+					"text": "{\"data\":{\"status\":\"new\",\"sender\":{\"instructions\":\"No instructions supplied by receiver\",\"contact\":{\"phone\":\"61 1300 606 614\",\"name\":\"Admin\",\"company\":\"Vamp.me\"},\"address\":{\"suburb\":\"Sydney\",\"state_name\":\"NSW\",\"postcode\":\"2000\",\"country\":\"Australia\",\"address_line1\":\"50 King Street\"}},\"products\":[{\"sku\":\"2034334\",\"name\":\"Metal Vent Tech Short Sleeve\",\"colors\":[],\"campaign_product_id\":100},{\"sku\":\"3819211\",\"name\":\"Align Pant Full Length 28\",\"colors\":[],\"campaign_product_id\":101},{\"sku\":\"3819008\",\"name\":\"Crafted Movement Bra - Girls\",\"colors\":[],\"campaign_product_id\":102}],\"participants\":[{\"shipping_weight\":null,\"shipping_size\":null,\"quantity\":null,\"products\":[{\"sku\":\"3819211\",\"size\":null,\"quantity\":null,\"campaign_product_id\":2},{\"sku\":\"3819008\",\"size\":null,\"quantity\":null,\"campaign_product_id\":3}],\"note_for_shipper\":null,\"influencer_id\":1001,\"full_name\":\"Ms. Jane Doe\",\"email\":\"participant1@vamp.com\",\"address\":{\"state_name\":\"NSW\",\"postcode\":\"2060\",\"country\":\"Australia\",\"city\":\"North Sydney\",\"address_line2\":\"17 Jones St\",\"address_line1\":\"Level 1\"}},{\"shipping_weight\":null,\"shipping_size\":null,\"quantity\":null,\"products\":[{\"sku\":\"3819211\",\"size\":null,\"quantity\":null,\"campaign_product_id\":2}],\"note_for_shipper\":null,\"influencer_id\":1002,\"full_name\":\"Ms. Satya Ramaputti\",\"email\":\"participant2@vamp.com\",\"address\":{\"state_name\":\"Arizona\",\"postcode\":\"85201\",\"country\":\"USA\",\"city\":\"Mesa\",\"address_line2\":\"Apt 82\",\"address_line1\":\"602 N May Mesa\"}},{\"shipping_weight\":null,\"shipping_size\":null,\"quantity\":null,\"products\":[{\"sku\":\"3819211\",\"size\":null,\"quantity\":null,\"campaign_product_id\":2}],\"note_for_shipper\":null,\"influencer_id\":1003,\"full_name\":\"Losena Faluvau\",\"email\":\"participant3@vamp.com\",\"address\":{\"state_name\":\"\",\"postcode\":\"100220\",\"country\":\"Fiji Islands\",\"city\":\"Nadi Town\",\"address_line2\":\"Lot 11.\",\"address_line1\":\"Northern Press rd\"}},{\"shipping_weight\":null,\"shipping_size\":null,\"quantity\":null,\"products\":[{\"sku\":\"3819211\",\"size\":null,\"quantity\":null,\"campaign_product_id\":2}],\"note_for_shipper\":null,\"influencer_id\":1004,\"full_name\":\"Mark Jamal\",\"email\":\"participant4@vamp.com\",\"address\":{\"state_name\":\"\",\"postcode\":\"408600\",\"country\":\"Republic of Singapore\",\"city\":\"Singapore\",\"address_line2\":\"\",\"address_line1\":\"10 Eunos Road 8\"}}],\"packing_slips\":[{\"error\":{\"influencer_id\":1001,\"error\":\"Was not able to process order - something went wrong processing one of the orders.\"}},{\"error\":{\"messages\":{\"kilogram_weight\":[],\"contents\":[{\"value\":[\"can't be blank\"],\"description\":[\"can't be blank\"],\"country_of_origin\":[\"can't be blank\"]}]},\"influencer_id\":1002,\"error_description\":\"The data you supplied is invalid. Error messages are in the messages section. Please fix those fields and try again.\",\"error\":\"unprocessable_entity\"}},{\"error\":{\"messages\":{\"receiver\":[{\"address\":[{\"country\":[\"is not serviced by Sendle\"]}]}],\"contents\":[{\"value\":[\"can't be blank\"],\"description\":[\"can't be blank\"],\"country_of_origin\":[\"can't be blank\"]}]},\"influencer_id\":1003,\"error_description\":\"The data you supplied is invalid. Error messages are in the messages section. Please fix those fields and try again.\",\"error\":\"unprocessable_entity\"}},{\"error\":{\"messages\":{\"receiver\":[{\"address\":[{\"country\":[\"is not serviced by Sendle\"]}]}],\"contents\":[{\"value\":[\"can't be blank\"],\"description\":[\"can't be blank\"],\"country_of_origin\":[\"can't be blank\"]}]},\"influencer_id\":1004,\"error_description\":\"The data you supplied is invalid. Error messages are in the messages section. Please fix those fields and try again.\",\"error\":\"unprocessable_entity\"}}],\"instructions\":\"Missing some small tags\",\"campaign_name\":\"Lulumon Leggings Campaign Fall 2018\",\"campaign_id\":132}}",
+					"responseCode": {
+						"code": 201,
+						"name": "Created",
+						"detail": "The request has been fulfilled and resulted in a new resource being created."
+					},
+					"requestObject": {
+						"url": "{{endpoint}}/sendle/campaigns/132/process",
+						"pathVariableData": [],
+						"queryParams": [],
+						"headerData": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"description": "",
+								"enabled": true,
+								"disabled": false
+							},
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"description": "",
+								"enabled": true,
+								"disabled": false
+							}
+						],
+						"data": "{\n\t\"data\": {\n\t\t\"participants\": [\n\t\t\t{\n\t\t\t\t\"influencer_id\": 1001,\n\t\t\t\t\"campaign_id\": 132,\n\t\t\t\t\"description\": \"Product details from from Vamp client\",\n\t\t\t\t\"pickup_date\": \"2018-10-24\",\n\t\t\t\t\"kilogram_weight\": \"1\",\n\t\t\t\t\"cubic_metre_volume\": \"0.01\",\n\t\t\t\t\"customer_reference\": \"SupBdayPressie\",\n\t\t\t\t\"metadata\": {\n\t\t\t\t\t\"your_data\": \"XYZ123\"\n\t\t\t\t}\n\t\t\t},\n\t\t\t{\n\t\t\t\t\"influencer_id\": 1002,\n\t\t\t\t\"campaign_id\": 132,\n\t\t\t\t\"description\": \"Product details from from Vamp client\",\n\t\t\t\t\"pickup_date\": \"2018-10-24\",\n\t\t\t\t\"kilogram_weight\": \"1\",\n\t\t\t\t\"cubic_metre_volume\": \"0.01\",\n\t\t\t\t\"customer_reference\": \"SupBdayPressie\",\n\t\t\t\t\"metadata\": {\n\t\t\t\t\t\"your_data\": \"XYZ123\"\n\t\t\t\t}\n\t\t\t},\n\t\t\t{\n\t\t\t\t\"influencer_id\": 1003,\n\t\t\t\t\"campaign_id\": 132,\n\t\t\t\t\"description\": \"Product details from from Vamp client\",\n\t\t\t\t\"pickup_date\": \"2018-10-24\",\n\t\t\t\t\"kilogram_weight\": \"1\",\n\t\t\t\t\"cubic_metre_volume\": \"0.01\",\n\t\t\t\t\"customer_reference\": \"SupBdayPressie\",\n\t\t\t\t\"metadata\": {\n\t\t\t\t\t\"your_data\": \"XYZ123\"\n\t\t\t\t}\n\t\t\t},\n\t\t\t{\n\t\t\t\t\"influencer_id\": 1004,\n\t\t\t\t\"campaign_id\": 132,\n\t\t\t\t\"description\": \"Product details from from Vamp client\",\n\t\t\t\t\"pickup_date\": \"2018-10-24\",\n\t\t\t\t\"kilogram_weight\": \"1\",\n\t\t\t\t\"cubic_metre_volume\": \"0.01\",\n\t\t\t\t\"customer_reference\": \"SupBdayPressie\",\n\t\t\t\t\"metadata\": {\n\t\t\t\t\t\"your_data\": \"XYZ123\"\n\t\t\t\t}\n\t\t\t}\n\t\t]\n\t}\n}",
+						"method": "PUT",
+						"dataMode": "raw"
+					},
+					"headers": [
+						{
+							"key": "cache-control",
+							"value": "max-age=0, private, must-revalidate",
+							"name": "cache-control",
+							"description": "Tells all caching mechanisms from server to client whether they may cache this object. It is measured in seconds"
+						},
+						{
+							"key": "content-length",
+							"value": "3672",
+							"name": "content-length",
+							"description": "The length of the response body in octets (8-bit bytes)"
+						},
+						{
+							"key": "content-type",
+							"value": "application/json; charset=utf-8",
+							"name": "content-type",
+							"description": "The mime type of this content"
+						},
+						{
+							"key": "date",
+							"value": "Wed, 29 Aug 2018 06:21:53 GMT",
+							"name": "date",
+							"description": "The date and time that the message was sent"
+						},
+						{
+							"key": "server",
+							"value": "Cowboy",
+							"name": "server",
+							"description": "A name for the server"
+						}
+					],
+					"cookies": [],
+					"request": "a7684087-be6f-4289-9c42-1dee88a6d6e3",
+					"collection": "a9cc8e10-41f5-46df-8736-a114cd6a7a6f"
+				}
+			],
+			"rawModeData": "{\n\t\"data\": {\n\t\t\"participants\": [\n\t\t\t{\n\t\t\t\t\"influencer_id\": 1002,\n\t\t\t\t\"campaign_id\": 132,\n\t\t\t\t\"description\": \"Product details from from Vamp client\",\n\t\t\t\t\"pickup_date\": \"2018-09-24\",\n\t\t\t\t\"kilogram_weight\": \"1\",\n\t\t\t\t\"cubic_metre_volume\": \"0.01\",\n\t\t\t\t\"customer_reference\": \"Hey Hey SupBdayPressie\",\n\t\t\t\t\"metadata\": {\n\t\t\t\t\t\"your_data\": \"XYZ123\"\n\t\t\t\t},\n\t\t\t\t\"contents\": {\n    \t\t\t\t\"description\": \"T-shirt\",\n    \t\t\t\t\"value\": \"20.00\",\n    \t\t\t\t\"country_of_origin\": \"China\"\n    \t\t\t}\n\t\t\t},\n\t\t\t{\n\t\t\t\t\"influencer_id\": 1002,\n\t\t\t\t\"campaign_id\": 132,\n\t\t\t\t\"description\": \"Product details from from Vamp client\",\n\t\t\t\t\"pickup_date\": \"2018-09-24\",\n\t\t\t\t\"kilogram_weight\": \"1\",\n\t\t\t\t\"cubic_metre_volume\": \"0.01\",\n\t\t\t\t\"customer_reference\": \"Hey Hey SupBdayPressie\",\n\t\t\t\t\"metadata\": {\n\t\t\t\t\t\"your_data\": \"XYZ123\"\n\t\t\t\t},\n\t\t\t\t\"contents\": {\n    \t\t\t\t\"description\": \"T-shirt\",\n    \t\t\t\t\"value\": \"20.00\",\n    \t\t\t\t\"country_of_origin\": \"China\"\n    \t\t\t}\n\t\t\t},\n\t\t\t{\n\t\t\t\t\"influencer_id\": 1003,\n\t\t\t\t\"campaign_id\": 132,\n\t\t\t\t\"description\": \"Product details from from Vamp client\",\n\t\t\t\t\"pickup_date\": \"2018-10-24\",\n\t\t\t\t\"kilogram_weight\": \"1\",\n\t\t\t\t\"cubic_metre_volume\": \"0.01\",\n\t\t\t\t\"customer_reference\": \"SupBdayPressie\",\n\t\t\t\t\"metadata\": {\n\t\t\t\t\t\"your_data\": \"XYZ123\"\n\t\t\t\t},\n\t\t\t\t\"contents\": {\n    \t\t\t\t\"description\": \"T-shirt\",\n    \t\t\t\t\"value\": \"20.00\",\n    \t\t\t\t\"country_of_origin\": \"China\"\n    \t\t\t}\n\t\t\t},\n\t\t\t{\n\t\t\t\t\"influencer_id\": 1004,\n\t\t\t\t\"campaign_id\": 132,\n\t\t\t\t\"description\": \"Product details from from Vamp client\",\n\t\t\t\t\"pickup_date\": \"2018-10-24\",\n\t\t\t\t\"kilogram_weight\": \"1\",\n\t\t\t\t\"cubic_metre_volume\": \"0.01\",\n\t\t\t\t\"customer_reference\": \"SupBdayPressie\",\n\t\t\t\t\"metadata\": {\n\t\t\t\t\t\"your_data\": \"XYZ123\"\n\t\t\t\t},\n\t\t\t\t\"contents\": {\n    \t\t\t\t\"description\": \"T-shirt\",\n    \t\t\t\t\"value\": \"20.00\",\n    \t\t\t\t\"country_of_origin\": \"China\"\n    \t\t\t}\n\t\t\t}\n\t\t]\n\t}\n}",
+			"headers": "Content-Type: application/json\nAccept: application/json\n",
 			"pathVariables": {}
 		}
 	]
