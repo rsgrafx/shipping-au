@@ -200,7 +200,7 @@ defmodule Sendle.Campaigns do
           body = Map.merge(%{"influencer_id" => order.influencer_id}, body)
 
           if result.status == 201 do
-            _ = save_response(order.influencer_id, order.campaign_id, body)
+            save_response(order.influencer_id, order.campaign_id, body)
           end
 
           %{result | body: body}
