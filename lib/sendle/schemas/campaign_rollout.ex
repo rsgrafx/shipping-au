@@ -8,7 +8,7 @@ defmodule Sendle.Schemas.CampaignRollout do
     has_many(:participants, Sendle.Schemas.CampaignParticipant)
     has_many(:products, Sendle.Schemas.CampaignProduct)
     field(:name, :string)
-    field(:status, :string, default: :new)
+    field(:status, :string, default: "new")
     field(:campaign_id, :integer)
     field(:instructions, :string)
     field(:meta, :map)
