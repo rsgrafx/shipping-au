@@ -33,7 +33,6 @@ defmodule Sendle.Campaigns.Campaign do
 
   @spec new(data :: map() | CampaignRollout.t()) :: t
   def new(%CampaignRollout{} = data) do
-    IO.inspect(data)
     struct(__MODULE__,
       campaign_name: data.name,
       campaign_id: data.campaign_id,

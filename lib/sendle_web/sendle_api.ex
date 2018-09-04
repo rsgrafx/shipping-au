@@ -53,6 +53,7 @@ defmodule SendleWeb.Api do
          %Campaign{} = campaign <- Campaigns.get_campaign(campaign_id: camp_id),
          {:ok, order_requests} <- Campaigns.process_orders(campaign, conn.body_params),
          {:ok, request_responses} <- Campaigns.send_requests(order_requests),
+         Campaigns.mark_as_processed(campaign_id),
          campaign = Campaigns.build_response(campaign, request_responses) do
       json_response(conn, 201, %{data: campaign})
     else

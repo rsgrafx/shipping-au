@@ -16,7 +16,8 @@ defmodule Sendle.Campaigns.Participant do
           shipping_weight: float(),
           quantity: integer(),
           influencer_id: integer(),
-          products: list()
+          products: list(),
+          sendle_response: map()
         }
 
   defstruct full_name: nil,
@@ -27,13 +28,14 @@ defmodule Sendle.Campaigns.Participant do
             shipping_size: nil,
             shipping_weight: nil,
             quantity: nil,
-            products: []
+            products: [],
+            sendle_response: nil
 
   @spec build(data :: CampaignParticipant.t() | map()) :: t()
   @doc "Loading from from the database."
   def build(%CampaignParticipant{} = data) do
     values =
-      Map.take(data, [:city, :postcode, :country, :state_name, :address_line1, :address_line2])
+      Map.take(data, [:city, :postcode, :country, :state_name, :address_line1, :address_line2, :sendle_responses])
 
     struct(__MODULE__,
       address: build_address(values),
@@ -45,9 +47,22 @@ defmodule Sendle.Campaigns.Participant do
       weight: data.weight,
       quantity: data.quantity,
       shipping_instructions: data.note,
-      products: build_products(data)
+      products: build_products(data),
+      sendle_response: response(values.sendle_responses)
     )
   end
+
+  @attrs [
+    :order_id,
+    :order_url,
+    :price,
+    :route,
+    :scheduling,
+    :reference,
+    :tracking_url
+  ]
+  defp response([sendle|_]), do: Map.take(sendle, @attrs)
+  defp response(_), do: []
 
   # "Building from the API."
   def build(data) do
