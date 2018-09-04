@@ -17,33 +17,24 @@ defmodule Sendle.Campaigns.Process do
     {_, %{data: request_data}} = atomize(request_data, Poison)
 
     results =
-      Enum.map(campaign.participants, fn inflcer ->
-        Enum.filter(request_data.participants, &(&1.influencer_id == inflcer.influencer_id))
-        |> case do
-          [] -> :error_none_found
-          [address_data] -> order_request_payload(inflcer, address_data)
+      Enum.reduce(campaign.participants, [], fn(infl, acc) ->
+        result = Enum.filter(request_data.participants, &(&1.influencer_id == infl.influencer_id))
+        case result do
+          [] -> acc
+          [address_data] ->
+            payload = order_request_payload(infl, address_data)
+            [payload|acc]
         end
       end)
-
     {:ok, results}
   end
 
-  @bad_request %{
-    body: %{
-      error: "Was not able to process order - something went wrong processing one of the orders."
-    },
-    status: 500
-  }
   @spec send_requests(order_lists :: [map()]) :: {:ok, [map()]} | {:error, any()}
   def send_requests(order_lists) do
     results =
       order_lists
       |> build_tasks()
-      |> Enum.map(fn
-        {:error_none_found, _} ->
-          @bad_request
-
-        {order, task} ->
+      |> Enum.map(fn {order, task} ->
           %{body: body} = result = Map.take(wait_and_return(order, task), [:body, :status])
 
           body =
@@ -71,6 +62,12 @@ defmodule Sendle.Campaigns.Process do
     end)
   end
 
+  @bad_request %{
+    body: %{
+      error: "Was not able to process order - something went wrong processing one of the orders."
+    },
+    status: 500
+  }
   def wait_and_return(order, task) do
     try do
       Task.await(task)
