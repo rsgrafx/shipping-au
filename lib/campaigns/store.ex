@@ -27,7 +27,6 @@ defmodule Sendle.Campaigns.Store do
 
   @doc """
     Takes a Campaign.t as a parameter
-     - Saves
      - saves CampaignParticipant.t records
   """
   @spec save(campaign :: Campaign.t()) :: map()
