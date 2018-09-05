@@ -25,6 +25,7 @@ defmodule Sendle.SchemaFactory do
 
   def campaign_participant_factory do
     address = Enum.random(["50", "44", "66", "58-68", "70", "90"]) <> " King Street"
+
     %CampaignParticipant{
       campaign_id: nil,
       influencer_id: :rand.uniform(1_000_100) + sequence(:influencer_id, fn n -> n end),

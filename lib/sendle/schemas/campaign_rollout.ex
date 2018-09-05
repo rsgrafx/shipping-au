@@ -8,7 +8,7 @@ defmodule Sendle.Schemas.CampaignRollout do
     has_many(:participants, Sendle.Schemas.CampaignParticipant)
     has_many(:products, Sendle.Schemas.CampaignProduct)
     field(:name, :string)
-    field(:status, :string, virtual: true, default: :new)
+    field(:status, :string, default: "new")
     field(:campaign_id, :integer)
     field(:instructions, :string)
     field(:meta, :map)
@@ -24,6 +24,12 @@ defmodule Sendle.Schemas.CampaignRollout do
     struct
     |> cast(params, @allowed)
     |> validate_required(@allowed -- [:meta])
+  end
+
+  def status_changeset(struct, params) do
+    struct
+    |> cast(params, [:status])
+    |> validate_inclusion(:status, ["new", "processed", "failure"])
   end
 
   @spec build(campaign :: map()) :: t()
