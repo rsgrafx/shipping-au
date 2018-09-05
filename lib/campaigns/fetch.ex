@@ -56,5 +56,4 @@ defmodule Sendle.Campaigns.Fetch do
       select: product
     )
   end
-
 end

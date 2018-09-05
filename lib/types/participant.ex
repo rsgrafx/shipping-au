@@ -35,7 +35,15 @@ defmodule Sendle.Campaigns.Participant do
   @doc "Loading from from the database."
   def build(%CampaignParticipant{} = data) do
     values =
-      Map.take(data, [:city, :postcode, :country, :state_name, :address_line1, :address_line2, :sendle_responses])
+      Map.take(data, [
+        :city,
+        :postcode,
+        :country,
+        :state_name,
+        :address_line1,
+        :address_line2,
+        :sendle_responses
+      ])
 
     struct(__MODULE__,
       address: build_address(values),
@@ -61,7 +69,7 @@ defmodule Sendle.Campaigns.Participant do
     :reference,
     :tracking_url
   ]
-  defp response([sendle|_]), do: Map.take(sendle, @attrs)
+  defp response([sendle | _]), do: Map.take(sendle, @attrs)
   defp response(_), do: []
 
   # "Building from the API."

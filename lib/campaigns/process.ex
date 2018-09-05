@@ -17,48 +17,70 @@ defmodule Sendle.Campaigns.Process do
     {_, %{data: request_data}} = atomize(request_data, Poison)
 
     results =
-      Enum.reduce(campaign.participants, [], fn(infl, acc) ->
+      Enum.reduce(campaign.participants, [], fn infl, acc ->
         result = Enum.filter(request_data.participants, &(&1.influencer_id == infl.influencer_id))
+
         case result do
-          [] -> acc
+          [] ->
+            acc
+
           [address_data] ->
             payload = order_request_payload(infl, address_data)
-            [payload|acc]
+            [payload | acc]
         end
       end)
+
     {:ok, results}
   end
 
-  @spec send_requests(order_lists :: [map()]) :: {:ok, [map()]} | {:error, any()}
+  alias Sendle.HTTP.{Response, RequestError}
+
+  @spec send_requests(order_lists :: [map()]) :: {:ok, [map()]}
   def send_requests(order_lists) do
-    results =
-      order_lists
-      |> build_tasks()
-      |> Enum.map(fn {order, task} ->
-          %{body: body} = result = Map.take(wait_and_return(order, task), [:body, :status])
+    order_lists
+    |> build_tasks()
+    |> check_tasks([])
+  end
 
-          body =
-            if is_nil(body) do
-              Map.merge(%{"influencer_id" => order.influencer_id}, %{
-                "error" => "Nil response from API"
-              })
-            else
-              Map.merge(%{"influencer_id" => order.influencer_id}, body)
-            end
-
-          if result.status == 201 do
-            Store.save_response(order.influencer_id, order.campaign_id, body)
-          end
-
-          %{result | body: body}
-      end)
-
+  defp check_tasks([], results) do
     {:ok, results}
+  end
+
+  defp check_tasks([{order, %Response{} = response} | tail], values) do
+    %{body: body, status: status} = result = Map.take(response, [:body, :status])
+
+    if status == 201 do
+      Store.save_response(order.influencer_id, order.campaign_id, body)
+    end
+
+    result = %{result | body: set_influencer(body, order.influencer_id)}
+
+    check_tasks(tail, [result | values])
+  end
+
+  defp check_tasks([{order, %{} = response} | tail], values) do
+    %{body: body} = result = Map.take(response, [:body, :status])
+
+    result = %{result | body: set_influencer(body, order.influencer_id)}
+    check_tasks(tail, [result | values])
+  end
+
+  defp check_tasks([{_, %Task{}} | _tail] = list, values) do
+    check_tasks(Enum.reverse(list), values)
+  end
+
+  defp set_influencer(nil, influencer_id) do
+    Map.merge(%{"influencer_id" => influencer_id}, %{"error" => "Nil response from API"})
+  end
+
+  defp set_influencer(body, influencer_id) do
+    Map.merge(%{"influencer_id" => influencer_id}, body)
   end
 
   defp build_tasks(order_lists) do
-    Enum.map(order_lists, fn payload ->
-      {payload, Task.async(fn -> CreateOrder.request(payload) end)}
+    Enum.map(order_lists, fn order ->
+      task = Task.async(fn -> CreateOrder.request(order) end)
+      {order, wait_and_return(order, task)}
     end)
   end
 
@@ -138,5 +160,4 @@ defmodule Sendle.Campaigns.Process do
   defp pluck_sendle_data(data) do
     %{error: data.body}
   end
-
 end

@@ -95,7 +95,6 @@ defmodule Sendle.Campaigns.Store do
     |> Repo.insert!()
   end
 
-
   @doc """
   Save response from Sendle after a successful process to `sendle_responses` table.
   """
@@ -126,12 +125,14 @@ defmodule Sendle.Campaigns.Store do
   @doc "Mark CampaignRollout as processed"
   def mark_as_processed(campaign_id) do
     cr = Repo.get_by(CampaignRollout, campaign_id: campaign_id)
+
     case cr do
-      nil -> :error_not_found
+      nil ->
+        :error_not_found
+
       %{} = rollout ->
         changeset = CampaignRollout.status_changeset(rollout, %{status: "processed"})
         Repo.update(changeset)
     end
   end
-
 end

@@ -4,11 +4,11 @@ defmodule Sendle.Campaigns do
     build picking_lists and packing slips
   """
 
- alias Sendle.Campaigns.{
-   Fetch,
-   Process,
-   Store
- }
+  alias Sendle.Campaigns.{
+    Fetch,
+    Process,
+    Store
+  }
 
   defdelegate get_campaign(params), to: Fetch
   defdelegate create(payload), to: Store

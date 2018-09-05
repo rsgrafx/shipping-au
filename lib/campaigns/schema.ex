@@ -1,8 +1,6 @@
 defmodule Sendle.Schema do
-
   defmacro __using__(_opts) do
     quote do
-
       import Ecto.Query
 
       alias Sendle.Campaigns.Campaign
@@ -26,7 +24,6 @@ defmodule Sendle.Schema do
       def atomize(%{data: _} = data, _) do
         data
       end
-
     end
   end
 end
