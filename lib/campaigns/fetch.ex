@@ -28,10 +28,9 @@ defmodule Sendle.Campaigns.Fetch do
         :not_found
 
       influencer ->
-        influencer =
-          Repo.preload(influencer, [[products: load_products(campaign_id)], :sendle_responses])
-
-        Participant.build(influencer)
+        influencer
+        |> Repo.preload([[products: load_products(campaign_id)], :sendle_responses])
+        |> Participant.build()
     end
   end
 
