@@ -65,6 +65,28 @@ defmodule SendleWeb.Api do
     end
   end
 
+  get "/sendle/campaigns/:campaign_id/influencers/:influencer_id" do
+    %{"campaign_id" => campaign_id, "influencer_id" => influencer_id} = conn.params
+
+    case Campaigns.get_influencer_details(campaign_id, influencer_id) do
+      :not_found -> json_response(conn, 404, %{data: %{error: "Not found"}})
+      val -> json_response(conn, 200, %{data: val})
+    end
+  end
+
+  get "/sendle/campaigns/:campaign_id/influencers/:influencer_id/current_order" do
+    %{"campaign_id" => campaign_id, "influencer_id" => influencer_id} = conn.params
+
+    with %{sendle_response: sendle_data} <- Campaigns.get_influencer_details(campaign_id, influencer_id),
+      response = Campaigns.get_labels(sendle_data) do
+      json_response(conn, 202, %{data: response.body})
+    else
+      _ ->
+        json_response(conn, 404, %{data: %{error: "Can not fetch label data"}})
+    end
+
+  end
+
   defp json_response(conn, status, response) do
     body = Poison.encode!(response)
 
