@@ -3,7 +3,6 @@ defmodule Sendle.Requests.ShippingOrders do
 
   @spec get_by_id(order_id :: String.t()) :: Response.t()
   def get_by_id(order_id) do
-
     creds = Sendle.get_api_credentials()
     order_url = "/api/orders/#{order_id}"
 

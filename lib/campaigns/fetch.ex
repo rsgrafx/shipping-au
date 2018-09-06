@@ -22,12 +22,18 @@ defmodule Sendle.Campaigns.Fetch do
   end
 
   def get_influencer_details(campaign_id, influencer_id) do
-    Repo.get_by(CampaignParticipant, campaign_id: campaign_id, influencer_id: influencer_id)
+    query =
+      from(cp in CampaignParticipant,
+        where: cp.campaign_id == ^campaign_id and cp.influencer_id == ^influencer_id,
+        limit: 1
+      )
+
+    Repo.all(query)
     |> case do
-      nil ->
+      [] ->
         :not_found
 
-      influencer ->
+      [influencer] ->
         influencer
         |> Repo.preload([[products: load_products(campaign_id)], :sendle_responses])
         |> Participant.build()
@@ -40,15 +46,10 @@ defmodule Sendle.Campaigns.Fetch do
     |> preload()
   end
 
-  defp do_get_campaign(campaign_id: id) do
-    query =
-      from(cr in CampaignRollout,
-        where: cr.campaign_id == ^id,
-        order_by: [desc: cr.inserted_at],
-        limit: 1
-      )
+  defp do_get_campaign(campaign_id: campaign_id) do
+    result = get_campaign_with_campaign_id(campaign_id)
 
-    case Repo.all(query) do
+    case result do
       [] -> nil
       [campaign] -> preload(campaign)
     end
@@ -70,5 +71,14 @@ defmodule Sendle.Campaigns.Fetch do
       where: pp.campaign_rollout_id == ^rollout_id,
       select: product
     )
+  end
+
+  def get_campaign_with_campaign_id(campaign_id) do
+    from(cr in CampaignRollout,
+      where: cr.campaign_id == ^campaign_id,
+      order_by: [desc: cr.inserted_at],
+      limit: 1
+    )
+    |> Repo.all()
   end
 end

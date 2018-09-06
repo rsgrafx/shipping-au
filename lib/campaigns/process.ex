@@ -36,8 +36,19 @@ defmodule Sendle.Campaigns.Process do
   alias Sendle.HTTP.{Response, RequestError}
 
   @spec get_labels(order :: map()) :: map()
-  def get_labels(order) do
+  def get_labels(order) when is_map(order) do
     ShippingOrders.get_by_id(order.order_id)
+  end
+
+  def get_labels(_) do
+    %{
+      body: %{
+        error: %{
+          message: "Influencer does not have a processed order with sendle."
+        }
+      },
+      status: 400
+    }
   end
 
   @spec send_requests(order_lists :: [map()]) :: {:ok, [map()]}

@@ -5,6 +5,8 @@ defmodule Sendle.Campaigns.Store do
 
   use Sendle.Schema
 
+  alias Sendle.Campaigns.Fetch
+
   @type campaign :: Campaign.t()
 
   @doc """
@@ -123,15 +125,14 @@ defmodule Sendle.Campaigns.Store do
 
   @doc "Mark CampaignRollout as processed"
   def mark_as_processed(campaign_id) do
-    cr = Repo.get_by(CampaignRollout, campaign_id: campaign_id)
-
-    case cr do
-      nil ->
+    case Fetch.get_campaign_with_campaign_id(campaign_id) do
+      [] ->
         :error_not_found
 
-      %{} = rollout ->
-        changeset = CampaignRollout.status_changeset(rollout, %{status: "processed"})
-        Repo.update(changeset)
+      [rollout] ->
+        rollout
+        |> CampaignRollout.status_changeset(%{status: "processed"})
+        |> Repo.update()
     end
   end
 end
