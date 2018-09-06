@@ -5,7 +5,7 @@ defmodule Sendle.Campaigns.Process do
   require Logger
   use Sendle.Schema
 
-  alias Sendle.Requests.CreateOrder
+  alias Sendle.Requests.{CreateOrder, ShippingOrders}
   alias Sendle.Campaigns.Store
   alias Sendle.Campaigns
 
@@ -34,6 +34,11 @@ defmodule Sendle.Campaigns.Process do
   end
 
   alias Sendle.HTTP.{Response, RequestError}
+
+  @spec get_labels(order :: map()) :: map()
+  def get_labels(order) do
+    ShippingOrders.get_by_id(order.order_id)
+  end
 
   @spec send_requests(order_lists :: [map()]) :: {:ok, [map()]}
   def send_requests(order_lists) do

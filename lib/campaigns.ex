@@ -11,12 +11,15 @@ defmodule Sendle.Campaigns do
   }
 
   defdelegate get_campaign(params), to: Fetch
+  defdelegate get_influencer_details(campaign_id, influencer), to: Fetch
   defdelegate create(payload), to: Store
   defdelegate mark_as_processed(campaign_id), to: Store
 
   defdelegate process_orders(campaign, request_data), to: Process
   defdelegate send_requests(order_lists), to: Process
   defdelegate build_response(campaign, response), to: Process
+  defdelegate get_labels(order_data), to: Process
+
 
   def warehouse(sender_key, instructions \\ "No instructions supplied by receiver") do
     vamp_address_locations = %{

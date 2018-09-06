@@ -5,6 +5,8 @@ defmodule Sendle.Campaigns.Fetch do
 
   use Sendle.Schema
 
+  alias Sendle.Campaigns.Participant
+
   @doc """
     Fetch Campaign.  From database
   """
@@ -16,6 +18,20 @@ defmodule Sendle.Campaigns.Fetch do
 
       campaign_rollout ->
         Campaign.new(campaign_rollout)
+    end
+  end
+
+  def get_influencer_details(campaign_id, influencer_id) do
+    Repo.get_by(CampaignParticipant, campaign_id: campaign_id, influencer_id: influencer_id)
+    |> case do
+      nil ->
+        :not_found
+
+      influencer ->
+        influencer =
+          Repo.preload(influencer, [[products: load_products(campaign_id)], :sendle_responses])
+
+        Participant.build(influencer)
     end
   end
 

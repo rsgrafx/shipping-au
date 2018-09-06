@@ -93,6 +93,8 @@ defmodule Sendle.Campaigns.Participant do
     Address.build(addr)
   end
 
+  defp build_products(%{products: %Ecto.Association.NotLoaded{}}), do: []
+
   defp build_products(%{products: products} = data) do
     Enum.map(products, fn product ->
       %{
