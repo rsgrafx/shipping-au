@@ -7,15 +7,22 @@ defmodule SendleWeb.Api do
   use Plug.Router
   import Plug.Conn
 
-  plug(:match)
-
   plug(Plug.Parsers,
     parsers: [:urlencoded, :multipart, :json, Plug.Parsers.JSON],
     pass: ["*/*"],
     json_decoder: Poison
   )
 
+  plug(Plug.Static.IndexHtml, at: "/")
+  plug(
+    Plug.Static,
+    at: "/",
+    from: "./priv/front-end/build/",
+    only: ~w(index.html favicon.ico static service-worker.js)
+  )
+
   plug(:dispatch)
+  plug(:match)
 
   alias Sendle.Campaigns
   alias Sendle.Campaigns.Campaign

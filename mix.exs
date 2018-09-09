@@ -34,6 +34,7 @@ defmodule Sendle.MixProject do
       {:elixir_uuid, "~> 1.2"},
       {:cowboy, "~> 1.0"},
       {:plug, "~> 1.5.0"},
+      {:plug_static_index_html, "~> 1.0"},
       {:ex_machina, "~> 2.2", only: [:dev, :test]},
       {:exvcr, "~> 0.10", only: :test},
       {:faker, "~> 0.10", only: [:dev, :test]},
