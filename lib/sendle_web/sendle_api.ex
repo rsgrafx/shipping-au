@@ -7,6 +7,8 @@ defmodule SendleWeb.Api do
   use Plug.Router
   import Plug.Conn
 
+  plug CORSPlug, origin: "*"
+
   plug(Plug.Parsers,
     parsers: [:urlencoded, :multipart, :json, Plug.Parsers.JSON],
     pass: ["*/*"],
@@ -21,8 +23,8 @@ defmodule SendleWeb.Api do
     only: ~w(index.html favicon.ico static service-worker.js)
   )
 
-  plug(:dispatch)
   plug(:match)
+  plug(:dispatch)
 
   alias Sendle.Campaigns
   alias Sendle.Campaigns.Campaign
@@ -42,6 +44,11 @@ defmodule SendleWeb.Api do
       _ ->
         json_response(conn, 401, %{data: %{error: "Could not process the payload."}})
     end
+  end
+
+  get "/sendle/pickinglists" do
+    picking_lists = Campaigns.get_current_picking_lists()
+    json_response(conn, 200, %{data: picking_lists})
   end
 
   get "/sendle/campaigns/:campaign_id" do

@@ -8,6 +8,21 @@ defmodule Sendle.Campaigns.Fetch do
   alias Sendle.Campaigns.Participant
 
   @doc """
+  Return list of campiaigns that have not being processed. Picking lists.
+  """
+  @spec get_current_picking_lists() :: [map()]
+  def get_current_picking_lists do
+    query = from cr in CampaignRollout,
+      where: cr.status == "new",
+      select: %Campaign{
+            campaign_id: cr.campaign_id,
+            campaign_name: cr.name,
+            status: cr.status
+          }
+    Repo.all(query)
+  end
+
+  @doc """
     Fetch Campaign.  From database
   """
   @spec get_campaign(params :: integer | Keyword.t()) :: Campaign.t()

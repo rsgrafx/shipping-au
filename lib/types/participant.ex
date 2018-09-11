@@ -98,8 +98,9 @@ defmodule Sendle.Campaigns.Participant do
   defp build_products(%{products: products} = data) do
     Enum.map(products, fn product ->
       %{
+        id: product.id,
         sku: product.sku,
-        campaign_product_id: product.id,
+        campaign_product_id: product.campaign_product_id,
         quantity: data.quantity,
         size: data.size
       }

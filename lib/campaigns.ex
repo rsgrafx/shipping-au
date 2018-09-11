@@ -11,6 +11,7 @@ defmodule Sendle.Campaigns do
   }
 
   defdelegate get_campaign(params), to: Fetch
+  defdelegate get_current_picking_lists(), to: Fetch
   defdelegate get_influencer_details(campaign_id, influencer), to: Fetch
   defdelegate create(payload), to: Store
   defdelegate mark_as_processed(campaign_id), to: Store
