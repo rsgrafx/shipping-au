@@ -1,0 +1,102 @@
+{
+	"data": {
+		"campaign_id": 843,
+		"campaign_name": "Adidas Fitbit partnership 2018",
+		"notes" : "Missing some small tags",
+		"participants": [{
+				"influencer_id": 99,
+				"email": "participant1@vamp.com",
+				"address": {
+					"full_name": "Travis Scott",
+					"address_line_1": "Level 2",
+					"address_line_2": "11 Jones St",
+					"city": "North Sydney",
+					"state": "NSW",
+					"country": "Australia",
+					"postcode": "2060"
+				},
+				"products": [{
+						"campaign_product_id": 10,
+						"quantity": 2,
+						"size": "12"
+					},
+					{
+						"campaign_product_id": 12,
+						"quantity": 1,
+						"size": "3"
+					}
+				]
+			},
+			{
+				"influencer_id": 100,
+				"email": "participant2@vamp.com",
+				"address": {
+					"full_name": "Miller Jack",
+					"address_line_1": "2710 N Adams St",
+					"address_line_2": "Apt 3",
+					"city": "Huntington Beach",
+					"state": "CA",
+					"country": "USA",
+					"postcode": "92648"
+				},
+				"products": [{
+					"campaign_product_id": 11,
+					"quantity": 2,
+					"size": "12"
+				}]
+			},
+			{
+				"influencer_id": 101,
+				"email": "participant3@vamp.com",
+				"address": {
+					"full_name": "Douglas Kern",
+					"address_line_1": "Northern Press rd",
+					"address_line_2": "Lot 11.",
+					"city": "Nadi Town",
+					"state": "",
+					"country": "Fiji Islands",
+					"postcode": "0000"
+				},
+				"products": [{
+					"campaign_product_id": 11,
+					"quantity": 2,
+					"size": "4"
+				}]
+			},
+			{
+				"influencer_id": 102,
+				"email": "participant4@vamp.com",
+				"address": {
+					"full_name": "Drake Mallard",
+					"address_line_1": "12 Eunos Road 8",
+					"address_line_2": "",
+					"city": "Singapore",
+					"state": "",
+					"country": "Singapore",
+					"postcode": "408600"
+				},
+				"products": [{
+					"campaign_product_id": 11,
+					"quantity": 2,
+					"size": "XL"
+				}]
+			}
+		],
+		"products": [{
+				"campaign_product_id": 10,
+				"name": "Metal Vent Tech Short Sleeve",
+				"sku": "2034334"
+			},
+			{
+				"campaign_product_id": 11,
+				"name": "Align Pant Full Length 28",
+				"sku": "3819211"
+			},
+			{
+				"campaign_product_id": 12,
+				"name": "Crafted Movement Bra - Girls",
+				"sku": "3819008"
+			}
+		]
+	}
+}

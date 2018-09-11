@@ -1,8 +1,11 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import './index.css';
-import App from './App';
-import registerServiceWorker from './registerServiceWorker';
+import { BrowserRouter } from 'react-router-dom'
 
-ReactDOM.render(<App />, document.getElementById('root'));
-registerServiceWorker();
+import './index.css';
+import SendleApiApp from './App';
+// import registerServiceWorker from './registerServiceWorker';
+
+ReactDOM.render(<BrowserRouter><SendleApiApp /></BrowserRouter>, document.getElementById('root'))
+
+// registerServiceWorker();
