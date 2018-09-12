@@ -5,6 +5,7 @@ import './App.css';
 import Home from './Home.js';
 
 import PickingListDisplay from './components/pickingListDisplay.js'
+import PackingListDisplay from './components/packingListDisplay.js'
 
 import * as SendleAPI from './sendleApi.js'
 
@@ -44,7 +45,7 @@ class SendleApiApp extends Component {
         <Route exact path="/pickingList/:campaign_id" render={(router) => <PickingListDisplay
             router={router}
           /> } />
-        <Route exact path="/packingList/:campaign_id" render={(router) => <PickingListDisplay
+        <Route exact path="/packingList/:campaign_id" render={(router) => <PackingListDisplay
             router={router}
           /> } />
         </div>
