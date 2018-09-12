@@ -51,6 +51,11 @@ defmodule SendleWeb.Api do
     json_response(conn, 200, %{data: picking_lists})
   end
 
+  get "/sendle/packinglists" do
+    packing_lists = Campaigns.processed_packing_lists()
+    json_response(conn, 200, %{data: packing_lists})
+  end
+
   get "/sendle/campaigns/:campaign_id" do
     %{"campaign_id" => campaign_id} = conn.params
 

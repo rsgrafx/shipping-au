@@ -3,7 +3,7 @@ import {Route, Link} from 'react-router-dom'
 import './App.css';
 
 import Home from './Home.js';
-import PickingLists from './components/pickingList.js'
+
 import PickingListDisplay from './components/pickingListDisplay.js'
 
 import * as SendleAPI from './sendleApi.js'
@@ -12,6 +12,7 @@ class SendleApiApp extends Component {
 
   state = {
     pickingLists: [],
+    packingLists: [],
     influencers: [],
   }
 
@@ -20,6 +21,13 @@ class SendleApiApp extends Component {
       .then((result) => {
         this.setState((prevState) => ({pickingLists: result.data}))
       })
+
+    SendleAPI.getPackingLists()
+    .then((result) => {
+      this.setState((prevState) => ({
+          packingLists: result.data
+      }))
+    })
   }
 
   render() {
@@ -32,8 +40,11 @@ class SendleApiApp extends Component {
           <h1 className="App-title">Sendle API Service</h1>
         </header>
         <div className="container">
-        <Route exact path="/" render={() => <PickingLists lists={this.state.pickingLists} /> } />
+        <Route exact path="/" render={() => <Home lists={this.state} /> } />
         <Route exact path="/pickingList/:campaign_id" render={(router) => <PickingListDisplay
+            router={router}
+          /> } />
+        <Route exact path="/packingList/:campaign_id" render={(router) => <PickingListDisplay
             router={router}
           /> } />
         </div>

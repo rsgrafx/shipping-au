@@ -12,14 +12,22 @@ defmodule Sendle.Campaigns.Fetch do
   """
   @spec get_current_picking_lists() :: [map()]
   def get_current_picking_lists do
+    Repo.all(fetch_campaigns_query)
+  end
+
+  @spec processed_packing_lists() :: [map()]
+  def processed_packing_lists do
+    Repo.all(fetch_campaigns_query("processed"))
+  end
+
+  defp fetch_campaigns_query(status \\ "new") do
     query = from cr in CampaignRollout,
-      where: cr.status == "new",
+      where: cr.status == ^status,
       select: %Campaign{
             campaign_id: cr.campaign_id,
             campaign_name: cr.name,
             status: cr.status
           }
-    Repo.all(query)
   end
 
   @doc """

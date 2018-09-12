@@ -21,3 +21,10 @@ export const get = (campaign_id) =>
    })
    .then(response => response.json())
    .then(data => data)
+
+export const getPackingLists = () =>
+   fetch(`${api}/sendle/packinglists`, {
+    method: 'GET', ...headers
+   })
+   .then(res => res.json())
+   .then(data => data)
