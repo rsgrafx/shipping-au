@@ -29,7 +29,8 @@ export default class PickingLists extends Component {
           </div>
           <div className="panel-body">
             <ul className="list-group">
-            { lists.pickingLists !== undefined && lists.pickingLists.map((pickingList) => (<PickingList data={pickingList}/>))}
+            { lists.pickingLists !== undefined
+              && lists.pickingLists.map((pickingList) => (<PickingList data={pickingList}/>))}
             </ul>
           </div>
         </div>
@@ -40,7 +41,8 @@ export default class PickingLists extends Component {
           </div>
           <div className="panel-body">
             <ul className="list-group">
-            { lists.packingLists !== undefined && lists.packingLists.map((pickingList) => (<PackingList data={pickingList}/>))}
+            { lists.packingLists !== undefined
+              && lists.packingLists.map((pickingList) => (<PackingList data={pickingList}/>))}
             </ul>
           </div>
         </div>

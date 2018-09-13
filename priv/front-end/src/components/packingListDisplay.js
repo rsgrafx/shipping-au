@@ -22,7 +22,7 @@ export default class PackingListDisplay extends Component {
           {
             data.participants !== undefined &&
             data.participants.map(
-              (influencer) => (<Influencer profile={influencer} products={data.products}/>)
+              (influencer) => (<Influencer processed={true} profile={influencer} products={data.products}/>)
             )
           }
         </div>)

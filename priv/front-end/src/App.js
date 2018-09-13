@@ -34,20 +34,20 @@ class SendleApiApp extends Component {
   render() {
     return (
       <div className="App">
-        <header className="App-header">
+        <header className="App-header text-left">
           <Link to="/">
-            <img src={'https://vamp.me/wp-content/uploads/2018/05/LOGO-Copy@2x_preview.png'} className="App-logo" alt="logo" />
+            <img src={'https://vamp.me/wp-content/uploads/2018/05/LOGO-Copy@2x_preview.png'} className="pull-left App-logo" alt="logo" />
           </Link>
-          <h1 className="App-title">Sendle API Service</h1>
+          <h2>Sendle API integration Example</h2>
         </header>
         <div className="container">
-        <Route exact path="/" render={() => <Home lists={this.state} /> } />
-        <Route exact path="/pickingList/:campaign_id" render={(router) => <PickingListDisplay
-            router={router}
-          /> } />
-        <Route exact path="/packingList/:campaign_id" render={(router) => <PackingListDisplay
-            router={router}
-          /> } />
+          <Route exact path="/" render={() => <Home lists={this.state} /> } />
+          <Route exact path="/pickingList/:campaign_id" render={(router) => <PickingListDisplay
+              router={router}
+            /> } />
+          <Route exact path="/packingList/:campaign_id" render={(router) => <PackingListDisplay
+              router={router}
+            /> } />
         </div>
       </div>
     );
