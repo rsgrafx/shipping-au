@@ -108,3 +108,12 @@
   from { transform: rotate(0deg); }
   to { transform: rotate(360deg); }
 }
+
+.mockUser {
+  background-color: aliceblue;
+  height: inherit;
+  padding: 5px;
+  border-block-start-color: aqua;
+  border: rgb(204, 204, 204) 1px solid;
+  display: inherit;
+}

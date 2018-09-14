@@ -28,3 +28,12 @@ export const getPackingLists = () =>
    })
    .then(res => res.json())
    .then(data => data)
+
+
+// Mock Users
+
+export const getMockUsers = () =>
+   fetch('https://randomuser.me/api/?results=7&nat=au,ca',
+    {method: 'GET', ...headers})
+    .then(res => res.json())
+    .then(json => json)

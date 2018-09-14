@@ -17,7 +17,7 @@ class Influencer extends React.Component {
   }
 
   render() {
-    const {profile, products, processed} = this.props
+    const {profile, products, processed, updateParcelInfo} = this.props
 
     const product_ids = profile.products.map((product) => (product.campaign_product_id))
 
@@ -31,9 +31,14 @@ class Influencer extends React.Component {
         <ParcelDetailsBtn
           alreadySent={processed}
           influencerId={profile.influencer_id}
-          showFormContainer={this.showFormContainer} />
+          showFormContainer={this.showFormContainer}
+          />
         <hr />
-        <PackageDetailsForm influencerId={profile.influencer_id} showComponent={this.state.showComponent}/>
+        <PackageDetailsForm
+          influencerId={profile.influencer_id}
+          showComponent={this.state.showComponent}
+          updateParcelInfo={updateParcelInfo}
+          />
         <div className="panel-heading">
           <div >
             <h4>{profile.full_name}</h4>

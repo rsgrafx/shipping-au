@@ -6,6 +6,7 @@ import Home from './Home.js';
 
 import PickingListDisplay from './components/pickingListDisplay.js'
 import PackingListDisplay from './components/packingListDisplay.js'
+import MockCampaign from './mockCampaign'
 
 import * as SendleAPI from './sendleApi.js'
 
@@ -42,6 +43,7 @@ class SendleApiApp extends Component {
         </header>
         <div className="container">
           <Route exact path="/" render={() => <Home lists={this.state} /> } />
+          <Route exact path="/mockCampaign" render={() => <MockCampaign lists={this.state} /> } />
           <Route exact path="/pickingList/:campaign_id" render={(router) => <PickingListDisplay
               router={router}
             /> } />
