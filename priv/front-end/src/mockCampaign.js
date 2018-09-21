@@ -14,16 +14,23 @@ const Name = ({name}) => {
   )
 }
 
-const MockUser = ({user}) => {
+const MockUser = ({
+    user: {
+      picture,
+      name,
+      email,
+      address
+    }
+  }) => {
   return(
     <div className="mockUser col-md-6">
       <div className="col-md-4">
-        <img src={user.picture.large} alt={`${user.name.first}}`} />
-        <p>{user.email}</p>
+        <img src={picture.large} alt={`${name.first}}`} />
+        <p>{email}</p>
       </div>
       <div className="col-md-8">
-        <Name name={user.name} />
-        <Address address={user.address} name={`${user.name.first} ${user.name.last}`} />
+        <Name name={name} />
+        <Address address={address} name={`${name.first} ${name.last}`} />
       </div>
       <hr />
     </div>
@@ -36,7 +43,7 @@ export default class MockCampaign extends React.Component {
     users: []
   }
 
-  componentWillMount() {
+  componentDidMount() {
     const {addresses} = addressData
     const users = sendleApi.getMockUsers()
       .then((users) => {
