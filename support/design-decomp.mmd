@@ -1,15 +1,15 @@
 sequenceDiagram
 
-participant advertiser as Advertiser (VampClient)
-participant vampAdmin as VampAdmin UI
-participant warehouse as Vamp (Warehouse UI)
-participant vampApi as Vamp Sendle Service
+participant advertiser as Advertiser (AcmeCoClient)
+participant vampAdmin as AcmeCoAdmin UI
+participant warehouse as AcmeCo (Warehouse UI)
+participant vampApi as AcmeCo Sendle Service
 
 participant sendle as Sendle API
 participant influencer as Influencer
 
 advertiser-->>vampAdmin: Wants to send product to Influencer
-Note over advertiser,vampAdmin: Uses Vamp UI to make request.
+Note over advertiser,vampAdmin: Uses AcmeCo UI to make request.
 
 vampAdmin->>+vampApi: sends order details to API
 

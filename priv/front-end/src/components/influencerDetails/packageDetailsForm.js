@@ -4,7 +4,7 @@ export default class PackageDetailsForm extends React.Component {
 
   state = {
     influencerId: this.props.influencerId,
-    description: "Vamp product campaign",
+    description: "AcmeCo product campaign",
 		pickup_date: null,
 		kilogram_weight: "1",
 		cubic_metre_volume: "0.01",

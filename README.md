@@ -1,9 +1,9 @@
-# Vamp Sendle Integration
 
+# Sendle Integration
 
 This this library will either be integrated as a standalone library in a (umbrella application) or may be run as a service.
 
-Visit [Wiki](https://github.com/visual-amplifiers/sendle/wiki/A.-Vamp-Sendle-Service) for full description of service [here](https://github.com/visual-amplifiers/sendle/wiki/A.-Vamp-Sendle-Service).
+Visit [Wiki](https://github.com/visual-amplifiers/sendle/wiki/A.-AcmeCo-Sendle-Service) for full description of service [here](https://github.com/visual-amplifiers/sendle/wiki/A.-AcmeCo-Sendle-Service).
 
 #### Installation.
 

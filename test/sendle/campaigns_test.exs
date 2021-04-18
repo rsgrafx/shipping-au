@@ -23,7 +23,7 @@ defmodule Sendle.CampaignsTest do
       sender_contact = %{
         name: "Admin",
         phone: "61 1300 606 614",
-        company: "Vamp.me"
+        company: "AcmeCo"
       }
 
       sender_address = %{
@@ -81,7 +81,7 @@ defmodule Sendle.CampaignsTest do
       payload: payload
     } do
       # Given a request has been submitted.
-      # A Vamp team member should be able to access PickingList.
+      # A AcmeCo team member should be able to access PickingList.
       payload
       |> Campaigns.create()
 
@@ -188,7 +188,7 @@ defmodule Sendle.CampaignsTest do
               postcode: "2000",
               state_name: "NSW"
             },
-            contact: %{company: "Vamp.me", name: "Admin", phone: "61 1300 606 614"},
+            contact: %{company: "AcmeCo", name: "Admin", phone: "61 1300 606 614"},
             instructions: "No instructions supplied by receiver"
           }
         } = influencer

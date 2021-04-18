@@ -278,7 +278,7 @@ campaign_id = Campaign (id) in `Servalan`.
 				"campaign_id": 100,
 				"package": {
 					"pickup_date": "2015-11-24",
-					"description": "Product details from from Vamp client",
+					"description": "Product details from from AcmeCo client",
 					"kilogram_weight": "1",
 					"cubic_metre_volume": "0.01",
 					"customer_reference": "SupBdayPressie",
@@ -292,7 +292,7 @@ campaign_id = Campaign (id) in `Servalan`.
 				"campaign_id": 100,
 				"package": {
 					"pickup_date": "2015-11-24",
-					"description": "Product details from from Vamp client",
+					"description": "Product details from from AcmeCo client",
 					"kilogram_weight": "1",
 					"cubic_metre_volume": "0.01",
 					"customer_reference": "SupBdayPressie",

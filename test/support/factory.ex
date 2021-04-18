@@ -34,7 +34,7 @@ defmodule Sendle.JSONFactory do
     %{
       name: "Admin",
       phone: "61 1300 606 614",
-      company: "Vamp.me"
+      company: "AcmeCo"
     }
   end
 
@@ -53,7 +53,7 @@ defmodule Sendle.JSONFactory do
     %{
       cubic_metre_volume: "0.01",
       customer_reference: "Nothing to say.",
-      description: "Vamp.me Order",
+      description: "AcmeCo Order",
       influencer_id: :rand.uniform(100),
       kilogram_weight: "1",
       meta_data: %{},
@@ -82,7 +82,7 @@ defmodule Sendle.JSONFactory do
           postcode: "2000",
           state_name: "NSW"
         },
-        contact: %{company: "Vamp.me", name: "Admin", phone: "61 1300 606 614"},
+        contact: %{company: "AcmeCo", name: "Admin", phone: "61 1300 606 614"},
         instructions: "No instructions supplied by receiver"
       }
     }

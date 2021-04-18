@@ -25,7 +25,7 @@ defmodule Sendle.Campaigns do
   def warehouse(sender_key, instructions \\ "No instructions supplied by receiver") do
     vamp_address_locations = %{
       au: %{
-        contact: %{name: "Admin", phone: "61 1300 606 614", company: "Vamp.me"},
+        contact: %{name: "Admin", phone: "61 1300 606 614", company: "AcmeCo"},
         address: %{
           address_line1: "50 King Street",
           suburb: "Sydney",

@@ -61,7 +61,7 @@ defmodule Sendle.Requests.CreateOrderTest do
         assert %{
                  "cubic_metre_volume" => "0.01",
                  "customer_reference" => "Nothing to say.",
-                 "description" => "Vamp.me Order",
+                 "description" => "AcmeCo Order",
                  "kilogram_weight" => "1.0",
                  "labels" => nil,
                  "metadata" => %{},
